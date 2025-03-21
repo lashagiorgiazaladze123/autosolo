@@ -1,0 +1,674 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Your Car - Soloauto</title>
+    <link rel="stylesheet" href="index.css">
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-section {
+            background-color: #f9f9f9;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="tel"],
+        select,
+        textarea {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        .radio-group,
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+
+        .radio-option,
+        .checkbox-option {
+            display: flex;
+            align-items: center;
+        }
+
+        .radio-option input,
+        .checkbox-option input {
+            margin-right: 5px;
+            width: auto;
+        }
+
+        .photo-upload {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .photo-placeholder {
+            width: 120px;
+            height: 90px;
+            background-color: #eee;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px dashed #999;
+            cursor: pointer;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        #verificationSection {
+            display: none;
+        }
+
+        .price-options {
+            display: flex;
+            gap: 15px;
+        }
+
+        .status-message {
+            margin-top: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            display: none;
+        }
+
+        .success {
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            color: #155724;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            color: #721c24;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Upload Your Car to Soloauto</h1>
+    <form id="carUploadForm">
+        <div class="form-section">
+            <h2>Basic Information</h2>
+
+            <div class="form-group">
+                <label>Steering Wheel:</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="steeringLeft" name="steering" value="left" required>
+                        <label for="steeringLeft">Left</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="steeringRight" name="steering" value="right">
+                        <label for="steeringRight">Right</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Transmission:</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="transmissionAuto" name="transmission" value="automatic" required>
+                        <label for="transmissionAuto">Automatic</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="transmissionManual" name="transmission" value="manual">
+                        <label for="transmissionManual">Manual</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Drive Type:</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="driveAWD" name="driveType" value="awd" required>
+                        <label for="driveAWD">AWD</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="driveRWD" name="driveType" value="rwd">
+                        <label for="driveRWD">RWD</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="driveFWD" name="driveType" value="fwd">
+                        <label for="driveFWD">FWD</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Number of Doors:</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="doors2" name="doors" value="2/3" required>
+                        <label for="doors2">2/3</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="doors4" name="doors" value="4/5">
+                        <label for="doors4">4/5</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="doors5plus" name="doors" value=">5">
+                        <label for="doors5plus">&gt;5</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Catalyst:</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="catalystYes" name="catalyst" value="yes" required>
+                        <label for="catalystYes">Yes</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="catalystNo" name="catalyst" value="no">
+                        <label for="catalystNo">No</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="airbags">Number of Airbags:</label>
+                <select id="airbags" name="airbags" required>
+                    <option value="">Select</option>
+                    <option value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Exterior & Interior</h2>
+
+            <div class="form-group">
+                <label for="exteriorColor">Exterior Color:</label>
+                <select id="exteriorColor" name="exteriorColor" required>
+                    <option value="">Select</option>
+                    <option value="black">Black</option>
+                    <option value="white">White</option>
+                    <option value="silver">Silver</option>
+                    <option value="gray">Gray</option>
+                    <option value="blue">Blue</option>
+                    <option value="red">Red</option>
+                    <option value="green">Green</option>
+                    <option value="brown">Brown</option>
+                    <option value="orange">Orange</option>
+                    <option value="yellow">Yellow</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Salon Material:</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="materialLeather" name="salonMaterial" value="leather" required>
+                        <label for="materialLeather">Leather</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="materialArtificialLeather" name="salonMaterial"
+                            value="artificial-leather">
+                        <label for="materialArtificialLeather">Artificial Leather</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="materialCombined" name="salonMaterial" value="combined">
+                        <label for="materialCombined">Combined</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="materialAlcantara" name="salonMaterial" value="alcantara">
+                        <label for="materialAlcantara">Alcantara</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="interiorColor">Interior Color:</label>
+                <select id="interiorColor" name="interiorColor" required>
+                    <option value="">Select</option>
+                    <option value="black">Black</option>
+                    <option value="white">White</option>
+                    <option value="gray">Gray</option>
+                    <option value="beige">Beige</option>
+                    <option value="brown">Brown</option>
+                    <option value="red">Red</option>
+                    <option value="other">Other</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Features</h2>
+
+            <div class="form-group">
+                <label>Additional Features:</label>
+                <div class="checkbox-group">
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="featureAC" name="features" value="air-conditioner">
+                        <label for="featureAC">Air Conditioner</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="featureStartStop" name="features" value="start-stop">
+                        <label for="featureStartStop">Start-Stop System</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="featureABS" name="features" value="abs">
+                        <label for="featureABS">ABS</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="featureBluetooth" name="features" value="bluetooth">
+                        <label for="featureBluetooth">Bluetooth</label>
+                    </div>
+                    <div class="checkbox-option">
+                        <input type="checkbox" id="featureDiscs" name="features" value="discs">
+                        <label for="featureDiscs">Disc Brakes</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Description & Location</h2>
+
+            <div class="form-group">
+                <label for="description">Automobile Description:</label>
+                <textarea id="description" name="description" rows="5"
+                    placeholder="Please describe your car in detail..." required></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="location">Location:</label>
+                <input type="text" id="location" name="location" placeholder="City, Region" required>
+            </div>
+
+            <div class="form-group">
+                <label>Customs Clearance:</label>
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" id="customsYes" name="customs" value="yes" required>
+                        <label for="customsYes">With Customs Clearance</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="customsNo" name="customs" value="no">
+                        <label for="customsNo">Without Customs Clearance</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Photos & Videos</h2>
+            <p>Upload up to 15 photos or videos of your car</p>
+
+            <div class="form-group">
+                <input type="file" id="photoUpload" name="photos" multiple accept="image/*,video/*" required>
+                <div class="photo-upload" id="photoPreview">
+                    <div class="photo-placeholder">
+                        + Add Photo
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="form-section">
+            <h2>Price & Contact Information</h2>
+
+            <div class="form-group">
+                <label>Price Options:</label>
+                <div class="price-options">
+                    <div class="radio-option">
+                        <input type="radio" id="priceFixed" name="priceOption" value="fixed" required>
+                        <label for="priceFixed">Fixed Price</label>
+                    </div>
+                    <div class="radio-option">
+                        <input type="radio" id="priceNegotiable" name="priceOption" value="negotiable">
+                        <label for="priceNegotiable">Price Negotiable</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group" id="fixedPriceGroup">
+                <label for="price">Price (USD):</label>
+                <input type="number" id="price" name="price" placeholder="Enter price">
+            </div>
+
+            <div class="form-group">
+                <label for="contactName">Contact Name:</label>
+                <input type="text" id="contactName" name="contactName" required>
+            </div>
+
+    <div class="main">
+        <div class="container">
+            <h1>Phone Number Verification with Firebase SMS</h1>
+    
+            <div class="number-input">
+                <input type="text" id="number" placeholder="+639948621564">
+                <div id="recaptcha-container"></div>
+                <button id="send" onclick="sendOTP()">Verify Number</button>
+            </div>
+    
+            <div class="verification" style="display: none;">
+                <input type="text" id="verificationCode" placeholder="OTP Code">
+                <button id="verify" onclick="verifyCode()">Send OTP</button>
+                <a href="#" onclick="location.reload()">Didn't receive a code? Try Again!</a>
+            </div>
+    
+            <div class="result" style="display: none;">
+                <div class="correct" style="display: none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/4315/4315445.png" alt="">
+                    <h3>Phone Number Verified!</h3>
+                    <button onclick="location.reload()">Confirm</button>
+                </div>
+    
+                <div class="incorrect" style="display: none;">
+                    <img src="https://cdn-icons-png.flaticon.com/512/14025/14025477.png" alt="">
+                    <h3>Phone Number Verified!</h3>
+                    <button onclick="location.reload()">Try Again!</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Firebase -->
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.12.1/firebase-auth-compat.js"></script>
+
+        <button type="submit" id="publishButton" disabled>Publish</button>
+    </form>
+
+    <div id="statusMessage" class="status-message"></div>
+
+    <script>
+        // Generate a random verification code
+        function generateVerificationCode() {
+            return Math.floor(1000 + Math.random() * 9000); // 4-digit code
+        }
+
+        // Store the verification code and phone number
+        let verificationData = {
+            code: null,
+            phone: null
+        };
+
+        // Show status message
+        function showStatusMessage(message, isSuccess) {
+            const statusElement = document.getElementById('statusMessage');
+            statusElement.textContent = message;
+            statusElement.className = 'status-message ' + (isSuccess ? 'success' : 'error');
+            statusElement.style.display = 'block';
+
+            // Auto hide after 5 seconds
+            setTimeout(() => {
+                statusElement.style.display = 'none';
+            }, 5000);
+        }
+
+        // Send SMS (simulated)
+        function sendSMS(phoneNumber, message) {
+            // In a real application, this would make an API call to an SMS service
+            console.log(`SMS to ${phoneNumber}: ${message}`);
+
+            // For demo purposes, we're simulating the SMS being sent successfully
+            return new Promise((resolve) => {
+                setTimeout(() => {
+                    resolve({ success: true });
+                }, 1000);
+            });
+        }
+
+        // Generate and send verification code
+        document.getElementById('getCodeButton').addEventListener('click', async function () {
+            const phoneNumber = document.getElementById('contactPhone').value;
+
+            if (!phoneNumber) {
+                showStatusMessage("Please enter your phone number first", false);
+                return;
+            }
+
+            try {
+                // Generate a verification code
+                const code = generateVerificationCode();
+
+                // Store the code and phone
+                verificationData = {
+                    code: code,
+                    phone: phoneNumber
+                };
+
+                // Send the SMS
+                const result = await sendSMS(phoneNumber, `Your Soloauto verification code is: ${code}`);
+
+                if (result.success) {
+                    document.getElementById('verificationSection').style.display = 'block';
+                    showStatusMessage(`Verification code sent to ${phoneNumber}. Please check your phone.`, true);
+                } else {
+                    showStatusMessage("Failed to send verification code. Please try again.", false);
+                }
+            } catch (error) {
+                showStatusMessage("Error sending verification code: " + error.message, false);
+            }
+        });
+
+        // Validate verification code
+        document.getElementById('verificationCode').addEventListener('input', function () {
+            const enteredCode = this.value;
+
+            if (enteredCode.length > 0) {
+                if (enteredCode == verificationData.code) {
+                    document.getElementById('publishButton').disabled = false;
+                    showStatusMessage("Verification successful! You can now publish your listing.", true);
+                } else if (enteredCode.length >= 4) {
+                    showStatusMessage("Invalid verification code. Please try again.", false);
+                }
+            } else {
+                document.getElementById('publishButton').disabled = true;
+            }
+        });
+
+        // Show/hide fixed price field based on price option selection
+        document.querySelectorAll('input[name="priceOption"]').forEach(function (radio) {
+            radio.addEventListener('change', function () {
+                if (this.value === 'fixed') {
+                    document.getElementById('fixedPriceGroup').style.display = 'block';
+                } else {
+                    document.getElementById('fixedPriceGroup').style.display = 'none';
+                }
+            });
+        });
+
+        // Create car listing HTML
+        function createCarListingHTML(formData) {
+            // Format features
+            const features = [];
+            formData.getAll('features').forEach(feature => {
+                features.push(feature.replace('-', ' '));
+            });
+
+            // Get selected radio values
+            const steering = formData.get('steering');
+            const transmission = formData.get('transmission');
+            const driveType = formData.get('driveType');
+            const doors = formData.get('doors');
+            const catalyst = formData.get('catalyst');
+            const customs = formData.get('customs');
+            const priceOption = formData.get('priceOption');
+            const salonMaterial = formData.get('salonMaterial');
+
+            // Get filename of first photo (in real app would use actual file path)
+            const photoFiles = document.getElementById('photoUpload').files;
+            const photoFileName = photoFiles.length > 0 ? photoFiles[0].name : 'no-image.jpg';
+
+            // Create timestamp
+            const now = new Date();
+            const timestamp = now.toLocaleDateString() + ' ' + now.toLocaleTimeString();
+
+            // Build HTML for the car listing
+            return `
+            <div class="car-listing">
+                <div class="car-header">
+                    <h3>${formData.get('description').substring(0, 60)}${formData.get('description').length > 60 ? '...' : ''}</h3>
+                    <div class="car-price">${priceOption === 'fixed' ? '$' + formData.get('price') : 'Price Negotiable'}</div>
+                </div>
+                <div class="car-details">
+                    <div class="car-image">
+                        <img src="images/uploads/${photoFileName}" alt="Car Photo">
+                    </div>
+                    <div class="car-info">
+                        <ul>
+                            <li><strong>Steering:</strong> ${steering}</li>
+                            <li><strong>Transmission:</strong> ${transmission}</li>
+                            <li><strong>Drive Type:</strong> ${driveType.toUpperCase()}</li>
+                            <li><strong>Doors:</strong> ${doors}</li>
+                            <li><strong>Location:</strong> ${formData.get('location')}</li>
+                            <li><strong>Interior:</strong> ${salonMaterial} - ${formData.get('interiorColor')}</li>
+                            <li><strong>Features:</strong> ${features.join(', ')}</li>
+                            <li><strong>Customs Clearance:</strong> ${customs === 'yes' ? 'Yes' : 'No'}</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="car-footer">
+                    <div class="car-contact">
+                        Contact: ${formData.get('contactName')} | ${formData.get('contactPhone')}
+                    </div>
+                    <div class="car-date">
+                        Listed: ${timestamp}
+                    </div>
+                </div>
+            </div>`;
+        }
+
+        // Add car listing to index.html
+        async function addListingToIndexHTML(listingHTML) {
+            try {
+                // In a real application, this would make an API call to your server
+                // to update the index.html file with the new listing
+
+                // For demo purposes, we're simulating a successful update
+                console.log("Adding to index.html:", listingHTML);
+
+                return new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve({ success: true });
+                    }, 1500);
+                });
+            } catch (error) {
+                console.error("Error adding listing:", error);
+                return { success: false, error: error.message };
+            }
+        }
+
+        // Handle form submission
+        document.getElementById('carUploadForm').addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            // Show loading message
+            showStatusMessage("Processing your listing...", true);
+
+            try {
+                // Get form data
+                const formData = new FormData(this);
+
+                // Create HTML for the car listing
+                const listingHTML = createCarListingHTML(formData);
+
+                // Add the listing to index.html
+                const result = await addListingToIndexHTML(listingHTML);
+
+                if (result.success) {
+                    showStatusMessage("Your car has been successfully added to Soloauto!", true);
+
+                    // Reset form after successful submission
+                    document.getElementById('carUploadForm').reset();
+                    document.getElementById('verificationSection').style.display = 'none';
+                    document.getElementById('publishButton').disabled = true;
+                    document.getElementById('photoPreview').innerHTML = '<div class="photo-placeholder">+ Add Photo</div>';
+                } else {
+                    showStatusMessage("Failed to add your car listing: " + (result.error || "Unknown error"), false);
+                }
+            } catch (error) {
+                showStatusMessage("Error processing your request: " + error.message, false);
+            }
+        });
+
+        // Simple photo preview
+        document.getElementById('photoUpload').addEventListener('change', function (event) {
+            const preview = document.getElementById('photoPreview');
+            preview.innerHTML = '';
+
+            const files = event.target.files;
+            for (let i = 0; i < Math.min(files.length, 15); i++) {
+                const placeholder = document.createElement('div');
+                placeholder.className = 'photo-placeholder';
+                placeholder.innerText = 'Photo ' + (i + 1);
+                preview.appendChild(placeholder);
+            }
+
+            // Always add one more placeholder if less than 15 photos
+            if (files.length < 15) {
+                const placeholder = document.createElement('div');
+                placeholder.className = 'photo-placeholder';
+                placeholder.innerText = '+ Add Photo';
+                preview.appendChild(placeholder);
+            }
+        });
+    </script>
+</body>
+
+</html>

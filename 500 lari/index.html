@@ -1,0 +1,1387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auto Solo</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
+    
+
+    <style>
+
+
+
+
+/* Header styling */
+header {
+    background-color: #ffffff;
+    padding: 15px 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Main container */
+#container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+    position: relative;
+}
+
+/* Logo styling */
+.logo {
+    display: flex;
+    align-items: center;
+
+}
+
+#newImg {
+    height: 100px;
+    width: 100px;
+    object-fit: contain;
+}
+
+/* Right side controls */
+.right-controls {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+}
+
+/* Upload button */
+.upload-button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+}
+
+.upload-button p {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.upload-icon {
+    width: 24px;
+    height: 24px;
+}
+
+/* Icon controls */
+.icon-controls {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+#myImg, #manu {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: transform 0.2s;
+}
+
+#myImg:hover, #manu:hover {
+    transform: scale(1.1);
+}
+
+/* Menu container */
+#menu-container {
+    position: absolute;
+    top: 100%;
+    right: 20px;
+    background-color: white;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    border-radius: 6px;
+    width: 220px;
+    z-index: 100;
+    display: none;
+    overflow: hidden;
+}
+
+#menu-container.visible {
+    display: block;
+}
+
+#menu-container ul {
+    list-style: none;
+}
+
+#menu-container ul li {
+    padding: 14px 18px;
+    border-bottom: 1px solid #eee;
+    transition: background 0.3s;
+}
+
+#menu-container ul li:last-child {
+    border-bottom: none;
+}
+
+#menu-container ul li a {
+    text-decoration: none;
+    color: #333;
+    display: block;
+    font-weight: 500;
+}
+
+#menu-container ul li:hover {
+    background: rgba(0, 0, 0, 0.05);
+}
+
+#menu-container ul li a:hover {
+    color: #007bff;
+}
+
+/* Google Translate */
+#google_translate_element {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+}
+
+
+
+        /* Custom clearance help */
+        .clearance-help {
+            background-color: #f0f0f0;
+            padding: 10px 0;
+            text-align: center;
+        }
+
+        .clearance-help a {
+            color: #d00;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .clearance-help a:hover {
+            text-decoration: underline;
+        }
+
+        /* Filter section */
+        .filter-section {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .filter-container {
+            background-color: #f8f8f8;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .filter-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .filter-item {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        .filter-item label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .filter-item select,
+        .filter-item input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+
+        .search-button {
+            background-color: #ff0000;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+            margin-left: 20px;
+        }
+
+        .search-button:hover {
+            background-color: #cc0000;
+        }
+
+        /* Cars result section */
+        .cars-section {
+            max-width: 1200px;
+            margin: 20px auto;
+            padding: 0 20px;
+        }
+
+        .cars-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+        }
+
+        .car-card {
+            border: 1px solid #eee;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .car-image {
+            width: 100%;
+            height: 200px;
+            background-color: #f0f0f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .car-details {
+            padding: 15px;
+        }
+
+        .car-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .car-specs {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+        }
+
+        .car-price {
+            font-size: 20px;
+            font-weight: bold;
+            color: red;
+        }
+
+        #myP {
+            color: hsl(0, 0%, 100%);
+        }
+
+        /* Disable translation on these specific elements */
+        #myH1[translate="no"],
+        #myP[translate="no"] {
+
+            font-family: inherit !important;
+            text-align: inherit !important;
+        }
+
+        #newId {
+            cursor: pointer;
+            margin-left: 380px;
+            
+        }
+        #newP{
+            margin-left: 345px;
+            font-weight: bold;
+            font-size: 20px;
+        }
+        #newImg {
+    height: 140px; /* Increased height */
+    width: 180px;  /* Increased width */
+    object-fit: contain;
+    
+}
+/* Filter button styling */
+.search-button {
+    background-color: #e53935; /* Red color to match the theme */
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.search-button:hover {
+    background-color: #c62828; /* Darker red on hover */
+}
+
+.advanced-filters-button {
+    background-color: #f5f5f5;
+    color: #333;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 10px 20px;
+    margin-left: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.advanced-filters-button:hover {
+    background-color: #e0e0e0;
+}
+
+/* You can also add active state styling for when the advanced filters are shown */
+.advanced-filters-button.active {
+    background-color: #e0e0e0;
+    border-color: #bbb;
+}
+
+
+        /* Disable translation on these specific elements */
+        /* Disable translation on these specific elements */
+    </style>
+    <link rel="stylesheet" href="index.css"> <!-- Adding back your original CSS file -->
+</head>
+
+<body>
+    <header>
+        <div id="container">
+            <!-- Logo on the left -->
+            <div class="logo">
+                <img id="newImg" src="https://cdn.gencraft.com/prod/user/850acc5b-bdb6-4201-89fd-0b13df9e0057/a3d9f4d1-7401-4db3-bcef-988b8818e95a/image/image0_0.jpg?Expires=1742651813&Signature=W20GFTA~mBtlvJUnerXMg63wHgIrq8qlh~BGxIOzuv2lCgG89lCO4figr8kCNVCaUcWFl7Mg5Ee6f2e69tYDM6oebPi4iF8a32mwPYbzcCxPuJcw87TjuNoMQg0c1eJ1EwCmHLFc0MJsUlQxfGREUhYiAPCuztiQAEHy7lgWKIvlD3I9PSLPJLo04HTdSGp-Q0CAga8~4WK1pThrnKS0~PeNsH3Cc7cvWCJ0h8QDXKX4rE5AOz48qJO24Vux94i1KaLsDRHhbKwiHJ1-7uyJBt7PABKqxEZJ23ajQxHyCQ3JPUPh-pggbqdxjoO~HVUw4Jw7dPSawSeJsuuu54roaw__&Key-Pair-Id=K3RDDB1TZ8BHT8" alt="Auto Solo Logo">
+            </div>
+            
+            <!-- Controls on the right -->
+            <div class="right-controls">
+                <!-- Upload car button -->
+                <div class="upload-button">
+                    <p>Upload Car</p>
+                    <svg class="upload-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v9m-5 0H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2M8 9l4-5 4 5m1 8h.01" />
+                    </svg>
+                </div>
+                
+                <!-- Search and Menu icons -->
+                <div class="icon-controls">
+                    <img id="myImg" src="search-interface-symbol.png" alt="search">
+                    <img id="manu" src="menu.png" alt="menu">
+                </div>
+            </div>
+        </div>
+    
+        <!-- Menu container -->
+        <div id="menu-container">
+            <ul>
+                <li><a href="#">Home</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Contact</a></li>
+                <li><a href="#">FAQ</a></li>
+                <li><a href="#">Custom Clearance Help</a></li>
+            </ul>
+        </div>
+        
+        <!-- Google Translate Element -->
+        <div id="google_translate_element"></div>
+    </header>
+
+    <!-- Custom clearance help section -->
+    <div class="clearance-help">
+        Need help with customs clearance? <a href="#">Contact our customs clearance specialists</a>
+    </div>
+
+    <!-- Filter section -->
+   <!-- Filter section -->
+<section class="filter-section">
+    <div class="filter-container">
+        <!-- Keep the existing filter rows unchanged -->
+        <div class="filter-row">
+            <div class="filter-item">
+                <label for="car-brand">Car Brand</label>
+                <select id="car-brand">
+                    <option value="">All Brands</option>
+                    <option value="audi">Audi</option>
+                    <option value="bmw">BMW</option>
+                    <option value="mercedes">Mercedes</option>
+                    <option value="volkswagen">Volkswagen</option>
+                    <option value="toyota">Toyota</option>
+                    <option value="volvo">Volvo</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <label for="car-model">Car Model</label>
+                <select id="car-model">
+                    <option value="">All Models</option>
+                    <option value="a4">A4</option>
+                    <option value="a6">A6</option>
+                    <option value="3-series">3 Series</option>
+                    <option value="5-series">5 Series</option>
+                    <option value="e-class">E-Class</option>
+                    <option value="c-class">C-Class</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <label for="location">Location</label>
+                <select id="location">
+                    <option value="">All Locations</option>
+                    <option value="warsaw">Warsaw</option>
+                    <option value="krakow">Krakow</option>
+                    <option value="gdansk">Gdansk</option>
+                    <option value="wroclaw">Wroclaw</option>
+                    <option value="poznan">Poznan</option>
+                </select>
+            </div>
+        </div>
+        <div class="filter-row">
+            <div class="filter-item">
+                <label for="customs-clearance">Customs Clearance</label>
+                <select id="customs-clearance">
+                    <option value="">All</option>
+                    <option value="with">With Customs Clearance</option>
+                    <option value="without">Without Customs Clearance</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <label for="fuel-type">Fuel Type</label>
+                <select id="fuel-type">
+                    <option value="">All Fuel Types</option>
+                    <option value="petrol">Petrol</option>
+                    <option value="diesel">Diesel</option>
+                    <option value="hybrid">Hybrid</option>
+                    <option value="electric">Electric</option>
+                </select>
+            </div>
+            <div class="filter-item">
+                <label for="year">Year</label>
+                <select id="year">
+                    <option value="">All Years</option>
+                    <option value="2024">2024</option>
+                    <option value="2023">2023</option>
+                    <option value="2022">2022</option>
+                    <option value="2021">2021</option>
+                    <option value="2020">2020</option>
+                    <option value="2019">2019</option>
+                    <option value="2018">2018</option>
+                </select>
+            </div>
+        </div>
+        <div class="filter-row">
+            <div class="filter-item">
+                <label for="price-min">Price Min (PLN)</label>
+                <input type="number" id="price-min" placeholder="Min Price">
+            </div>
+            <div class="filter-item">
+                <label for="price-max">Price Max (PLN)</label>
+                <input type="number" id="price-max" placeholder="Max Price">
+            </div>
+            <div class="filter-item">
+                <button class="search-button">Search Cars</button>
+                <button class="advanced-filters-button" id="advanced-filters-toggle">Advanced Filters</button>
+            </div>
+        </div>
+
+        <!-- Enhanced Advanced Filters Section -->
+        <div class="advanced-filters" id="advanced-filters" style="display: none;">
+            <!-- Standard advanced filters (kept from original) -->
+            <div class="filter-row">
+                <div class="filter-item">
+                    <label for="transmission">Transmission</label>
+                    <select id="transmission">
+                        <option value="">All Types</option>
+                        <option value="automatic">Automatic</option>
+                        <option value="manual">Manual</option>
+                        <option value="semi-automatic">Semi-Automatic</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="mileage-max">Mileage Max (km)</label>
+                    <input type="number" id="mileage-max" placeholder="Max Mileage">
+                </div>
+                <div class="filter-item">
+                    <label for="body-type">Body Type</label>
+                    <select id="body-type">
+                        <option value="">All Types</option>
+                        <option value="sedan">Sedan</option>
+                        <option value="suv">SUV</option>
+                        <option value="hatchback">Hatchback</option>
+                        <option value="wagon">Station Wagon</option>
+                        <option value="coupe">Coupe</option>
+                        <option value="convertible">Convertible</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-row">
+                <div class="filter-item">
+                    <label for="engine-size">Engine Size (L)</label>
+                    <select id="engine-size">
+                        <option value="">All Sizes</option>
+                        <option value="1.0-1.4">1.0 - 1.4</option>
+                        <option value="1.5-1.9">1.5 - 1.9</option>
+                        <option value="2.0-2.4">2.0 - 2.4</option>
+                        <option value="2.5-2.9">2.5 - 2.9</option>
+                        <option value="3.0+">3.0+</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="color">Color</label>
+                    <select id="color">
+                        <option value="">All Colors</option>
+                        <option value="black">Black</option>
+                        <option value="white">White</option>
+                        <option value="silver">Silver</option>
+                        <option value="gray">Gray</option>
+                        <option value="blue">Blue</option>
+                        <option value="red">Red</option>
+                        <option value="other">Other</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="owners">Previous Owners</label>
+                    <select id="owners">
+                        <option value="">Any</option>
+                        <option value="1">1 or fewer</option>
+                        <option value="2">2 or fewer</option>
+                        <option value="3+">3+</option>
+                    </select>
+                </div>
+            </div>
+            
+            <!-- New enhanced features section with checkboxes -->
+            <div class="features-container full-width">
+                <label class="features-label">Features</label>
+                <div class="features-checkboxes">
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="feature-leather" value="leather">
+                        <label for="feature-leather">Leather Seats</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="feature-sunroof" value="sunroof">
+                        <label for="feature-sunroof">Sunroof</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="feature-navigation" value="navigation">
+                        <label for="feature-navigation">Navigation</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="feature-camera" value="camera">
+                        <label for="feature-camera">Backup Camera</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="feature-heated" value="heated-seats">
+                        <label for="feature-heated">Heated Seats</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="feature-bluetooth" value="bluetooth">
+                        <label for="feature-bluetooth">Bluetooth</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="feature-cruise" value="cruise">
+                        <label for="feature-cruise">Cruise Control</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="feature-parking" value="parking">
+                        <label for="feature-parking">Parking Sensors</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="feature-climate" value="climate">
+                        <label for="feature-climate">Climate Control</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="feature-keyless" value="keyless">
+                        <label for="feature-keyless">Keyless Entry</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="feature-alloy" value="alloy">
+                        <label for="feature-alloy">Alloy Wheels</label>
+                    </div>
+                    <div class="checkbox-item">
+                        <input type="checkbox" id="feature-memory" value="memory">
+                        <label for="feature-memory">Memory Seats</label>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="filter-row">
+                <div class="filter-item">
+                    <label for="condition">Condition</label>
+                    <select id="condition">
+                        <option value="">All Conditions</option>
+                        <option value="new">New</option>
+                        <option value="like-new">Like New</option>
+                        <option value="excellent">Excellent</option>
+                        <option value="good">Good</option>
+                        <option value="fair">Fair</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="import-status">Import Status</label>
+                    <select id="import-status">
+                        <option value="">All</option>
+                        <option value="imported">Imported</option>
+                        <option value="local">Local</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <button class="apply-filters-button">Apply Filters</button>
+                    <button class="reset-filters-button">Reset Filters</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+    <!-- Cars result section -->
+    <section class="cars-section">
+        <div class="cars-container">
+            <!-- Car card 1 -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img img style="height: 100%;width:80%;"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmkrq3o115ydBnIMcCFUEpN692Mr9xuXfHKw&s"
+                        alt="Car"
+                        onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20fill%3D%22%23EEE%22%20width%3D%22300%22%20height%3D%22200%22%2F%3E%3Ctext%20fill%3D%22%23AAA%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2220%22%20text-anchor%3D%22middle%22%20x%3D%22150%22%20y%3D%22105%22%3ECar%20Image%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                </div>
+                <div class="car-details">
+                    <div class="car-title">BMW 3 Series 320d</div>
+                    <div class="car-specs">2022 • Diesel • 45,000 km • Warsaw</div>
+                    <div class="car-price">139,000 PLN</div>
+                </div>
+            </div>
+
+            <!-- Car card 2 -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img style="height: 100%;width:100%;"
+                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXMyScc1v8jhLt1p8-P7g-gA74rekcyH0gcg&s"
+                        alt="Car"
+                        onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20fill%3D%22%23EEE%22%20width%3D%22300%22%20height%3D%22200%22%2F%3E%3Ctext%20fill%3D%22%23AAA%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2220%22%20text-anchor%3D%22middle%22%20x%3D%22150%22%20y%3D%22105%22%3ECar%20Image%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                </div>
+                <div class="car-details">
+                    <div class="car-title">Audi A4 2.0 TDI</div>
+                    <div class="car-specs">2021 • Diesel • 62,000 km • Krakow</div>
+                    <div class="car-price">129,000 PLN</div>
+                </div>
+            </div>
+
+            <!-- Car card 3 -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="placeholder-car.jpg" alt="Car"
+                        onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20fill%3D%22%23EEE%22%20width%3D%22300%22%20height%3D%22200%22%2F%3E%3Ctext%20fill%3D%22%23AAA%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2220%22%20text-anchor%3D%22middle%22%20x%3D%22150%22%20y%3D%22105%22%3ECar%20Image%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                </div>
+                <div class="car-details">
+                    <div class="car-title">Mercedes-Benz C-Class C200</div>
+                    <div class="car-specs">2020 • Petrol • 85,000 km • Wroclaw</div>
+                    <div class="car-price">135,000 PLN</div>
+                </div>
+            </div>
+
+            <!-- Car card 4 -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="placeholder-car.jpg" alt="Car"
+                        onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20fill%3D%22%23EEE%22%20width%3D%22300%22%20height%3D%22200%22%2F%3E%3Ctext%20fill%3D%22%23AAA%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2220%22%20text-anchor%3D%22middle%22%20x%3D%22150%22%20y%3D%22105%22%3ECar%20Image%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                </div>
+                <div class="car-details">
+                    <div class="car-title">Volkswagen Golf 1.5 TSI</div>
+
+                    <div class="car-specs">2021 • Petrol • 55,000 km • Poznan</div>
+                    <div class="car-price">89,000 PLN</div>
+                </div>
+            </div>
+
+            <!-- Car card 5 -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="placeholder-car.jpg" alt="Car"
+                        onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%
+                    200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20fill%3D%22%23EEE%22%20width%3D%22300%22%20height%3D%22200%22%2F%3E%3Ctext%20fill%3D%22%23AAA%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2220%22%20text-anchor%3D%22middle%22%20x%3D%22150%22%20y%3D%22105%22%3ECar%20Image%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                </div>
+                <div class="car-details">
+                    <div class="car-title">Toyota Corolla Hybrid</div>
+                    <div class="car-specs">2022 • Hybrid • 25,000 km • Warsaw</div>
+                    <div class="car-price">108,000 PLN</div>
+                </div>
+            </div>
+
+            <!-- Car card 6 -->
+            <div class="car-card">
+                <div class="car-image">
+                    <img src="placeholder-car.jpg" alt="Car"
+                        onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20fill%3D%22%23EEE%22%20width%3D%22300%22%20height%3D%22200%22%2F%3E%3Ctext%20fill%3D%22%23AAA%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2220%22%20text-anchor%3D%22middle%22%20x%3D%22150%22%20y%3D%22105%22%3ECar%20Image%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                </div>
+                <div class="car-details">
+                    <div class="car-title">Volvo XC60 T6</div>
+                    <div class="car-specs">2021 • Petrol • 42,000 km • Gdansk</div>
+                    <div class="car-price">185,000 PLN</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Pagination -->
+    <section class="pagination-section">
+        <div class="pagination-container"
+            style="max-width: 1200px; margin: 20px auto; padding: 0 20px; text-align: center;">
+            <button class="pagination-button"
+                style="background-color: #f0f0f0; border: 1px solid #ddd; padding: 8px 15px; margin: 0 5px; border-radius: 4px; cursor: pointer;">1</button>
+            <button class="pagination-button"
+                style="background-color: white; border: 1px solid #ddd; padding: 8px 15px; margin: 0 5px; border-radius: 4px; cursor: pointer;">2</button>
+            <button class="pagination-button"
+                style="background-color: white; border: 1px solid #ddd; padding: 8px 15px; margin: 0 5px; border-radius: 4px; cursor: pointer;">3</button>
+            <button class="pagination-button"
+                style="background-color: white; border: 1px solid #ddd; padding: 8px 15px; margin: 0 5px; border-radius: 4px; cursor: pointer;">4</button>
+            <button class="pagination-button"
+                style="background-color: white; border: 1px solid #ddd; padding: 8px 15px; margin: 0 5px; border-radius: 4px; cursor: pointer;">5</button>
+            <button class="pagination-button"
+                style="background-color: white; border: 1px solid #ddd; padding: 8px 15px; margin: 0 5px; border-radius: 4px; cursor: pointer;">></button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer style="background-color: #333; color: white; padding: 30px 0; margin-top: 40px;">
+        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
+            <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
+                <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+                    <h3 style="margin-bottom: 15px; font-size: 18px;">About Auto Solo</h3>
+                    <p style="line-height: 1.6; font-size: 14px;">Auto Solo is Poland's leading car marketplace,
+                        connecting buyers and sellers nationwide. We offer a wide range of vehicles with customs
+                        clearance assistance.</p>
+                </div>
+                <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+                    <h3 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h3>
+                    <ul style="list-style: none; padding: 0;">
+                        <li style="margin-bottom: 8px;"><a href="#"
+                                style="color: white; text-decoration: none;">Home</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Search
+                                Cars</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Custom
+                                Clearance</a></li>
+                        <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Sell
+                                Your Car</a></li>
+                    </ul>
+                </div>
+                <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+                    <h3 style="margin-bottom: 15px; font-size: 18px;">Contact Us</h3>
+                    <p style="line-height: 1.6; font-size: 14px;">
+                        Email: info@autosolo.pl<br>
+                        Phone: +48 664-689-662<br>
+                        Address: ul. Motorowa 42,<br>
+                        00-001 Warsaw, Poland
+                    </p>
+                </div>
+                <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
+                    <h3 style="margin-bottom: 15px; font-size: 18px;">Newsletter</h3>
+                    <p style="line-height: 1.6; font-size: 14px;">Subscribe to our newsletter for the latest car
+                        listings and special offers.</p>
+                    <div style="display: flex; margin-top: 10px;">
+                        <input type="email" placeholder="Your email"
+                            style="flex: 1; padding: 8px; border: none; border-radius: 4px 0 0 4px;">
+                        <button
+                            style="background-color: red; color: white; border: none; padding: 8px 15px; border-radius: 0 4px 4px 0; cursor: pointer;">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div
+                style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #555; text-align: center; font-size: 14px;">
+                <p>&copy; 2025 Auto Solo. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+            document.addEventListener('DOMContentLoaded', function() {
+        const advancedFiltersToggle = document.getElementById('advanced-filters-toggle');
+        const advancedFilters = document.getElementById('advanced-filters');
+        
+        advancedFiltersToggle.addEventListener('click', function() {
+            if (advancedFilters.style.display === 'none') {
+                advancedFilters.style.display = 'block';
+                advancedFiltersToggle.textContent = 'Hide Advanced Filters';
+            } else {
+                advancedFilters.style.display = 'none';
+                advancedFiltersToggle.textContent = 'Advanced Filters';
+            }
+        });
+    });
+        // Search functionality
+document.addEventListener('DOMContentLoaded', function() {
+    // Search bar functionality
+    const searchIcon = document.getElementById('myImg');
+    
+    // Create search overlay elements
+    const searchOverlay = document.createElement('div');
+    searchOverlay.className = 'search-overlay';
+    searchOverlay.style.position = 'fixed';
+    searchOverlay.style.top = '0';
+    searchOverlay.style.left = '0';
+    searchOverlay.style.width = '100%';
+    searchOverlay.style.height = '100%';
+    searchOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
+    searchOverlay.style.zIndex = '1000';
+    searchOverlay.style.display = 'none';
+    searchOverlay.style.justifyContent = 'center';
+    searchOverlay.style.alignItems = 'center';
+    searchOverlay.style.transition = 'opacity 0.3s ease';
+    
+    const searchContainer = document.createElement('div');
+    searchContainer.className = 'search-container';
+    searchContainer.style.width = '80%';
+    searchContainer.style.maxWidth = '600px';
+    searchContainer.style.position = 'relative';
+    
+    const closeButton = document.createElement('button');
+    closeButton.className = 'close-search';
+    closeButton.innerHTML = '&times;';
+    closeButton.style.position = 'absolute';
+    closeButton.style.top = '-40px';
+    closeButton.style.right = '0';
+    closeButton.style.background = 'none';
+    closeButton.style.border = 'none';
+    closeButton.style.color = 'white';
+    closeButton.style.fontSize = '30px';
+    closeButton.style.cursor = 'pointer';
+    
+    const searchInput = document.createElement('input');
+    searchInput.type = 'text';
+    searchInput.placeholder = 'Search for cars, brands, models...';
+    searchInput.style.width = '100%';
+    searchInput.style.padding = '15px';
+    searchInput.style.fontSize = '18px';
+    searchInput.style.border = 'none';
+    searchInput.style.borderRadius = '4px';
+    searchInput.style.outline = 'none';
+    
+    // Assemble the search components
+    searchContainer.appendChild(closeButton);
+    searchContainer.appendChild(searchInput);
+    searchOverlay.appendChild(searchContainer);
+    document.body.appendChild(searchOverlay);
+    
+    // Search icon click event - show search overlay
+    searchIcon.addEventListener('click', function() {
+        searchOverlay.style.display = 'flex';
+        searchOverlay.style.opacity = '0';
+        setTimeout(() => {
+            searchOverlay.style.opacity = '1';
+            searchInput.focus();
+        }, 10);
+    });
+    
+    // Close button click event
+    closeButton.addEventListener('click', function() {
+        searchOverlay.style.opacity = '0';
+        setTimeout(() => {
+            searchOverlay.style.display = 'none';
+            searchInput.value = '';
+        }, 300);
+    });
+    
+    // Close search overlay when clicking outside the search container
+    searchOverlay.addEventListener('click', function(e) {
+        if (e.target === searchOverlay) {
+            closeButton.click();
+        }
+    });
+    
+    // Search functionality
+    searchInput.addEventListener('keypress', function(e) {
+        if (e.key === 'Enter') {
+            const searchTerm = searchInput.value.trim().toLowerCase();
+            if (searchTerm) {
+                // Perform search
+                performSearch(searchTerm);
+                closeButton.click();
+            }
+        }
+    });
+    
+    // Function to perform search
+    function performSearch(term) {
+        // Reset visible count
+        let visibleCount = 0;
+        
+        // Get all car cards
+        const carCards = document.querySelectorAll('.car-card');
+        
+        carCards.forEach(card => {
+            const cardTitle = card.querySelector('.car-title').textContent.toLowerCase();
+            const cardSpecs = card.querySelector('.car-specs').textContent.toLowerCase();
+            
+            // Check if the term is in the title or specs
+            if (cardTitle.includes(term) || cardSpecs.includes(term)) {
+                card.style.display = 'block';
+                visibleCount++;
+                
+                // Highlight the matching term
+                highlightText(card, term);
+            } else {
+                card.style.display = 'none';
+            }
+        });
+        
+        // Update results count or create if it doesn't exist
+        let resultsCount = document.getElementById('results-count');
+        if (!resultsCount) {
+            resultsCount = document.createElement('div');
+            resultsCount.id = 'results-count';
+            resultsCount.style.margin = '20px auto 0';
+            resultsCount.style.padding = '0 20px';
+            resultsCount.style.maxWidth = '1200px';
+            resultsCount.style.fontWeight = 'bold';
+            
+            const carsSection = document.querySelector('.cars-section');
+            carsSection.insertBefore(resultsCount, carsSection.firstChild);
+        }
+        
+        resultsCount.textContent = `Found ${visibleCount} cars matching "${term}"`;
+        resultsCount.scrollIntoView({ behavior: 'smooth' });
+    }
+    
+    // Function to highlight search terms
+    function highlightText(card, term) {
+        const title = card.querySelector('.car-title');
+        const specs = card.querySelector('.car-specs');
+        
+        // Store original content to restore when search is cleared
+        if (!title.dataset.original) {
+            title.dataset.original = title.textContent;
+            specs.dataset.original = specs.textContent;
+        }
+        
+        // Highlight in title
+        title.innerHTML = title.dataset.original.replace(
+            new RegExp(term, 'gi'),
+            match => `<span style="background-color: yellow; color: black;">${match}</span>`
+        );
+        
+        // Highlight in specs
+        specs.innerHTML = specs.dataset.original.replace(
+            new RegExp(term, 'gi'),
+            match => `<span style="background-color: yellow; color: black;">${match}</span>`
+        );
+    }
+});
+
+// Enhanced Menu Functionality
+document.addEventListener('DOMContentLoaded', function() {
+    const menuButton = document.getElementById('manu');
+    const menuContainer = document.getElementById('menu-container');
+    
+    // Enhanced menu toggle with animation
+    menuButton.addEventListener('click', function(e) {
+        e.stopPropagation(); // Prevent document click from immediately closing the menu
+        
+        if (menuContainer.classList.contains('visible')) {
+            // Close menu with animation
+            menuContainer.style.opacity = '0';
+            menuContainer.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                menuContainer.classList.remove('visible');
+                // Reset styles after animation
+                menuContainer.style.opacity = '';
+                menuContainer.style.transform = '';
+            }, 200);
+        } else {
+            // Setup for animation
+            menuContainer.style.opacity = '0';
+            menuContainer.style.transform = 'translateY(-10px)';
+            menuContainer.classList.add('visible');
+            
+            // Start animation after a small delay to ensure the display change has taken effect
+            setTimeout(() => {
+                menuContainer.style.opacity = '1';
+                menuContainer.style.transform = 'translateY(0)';
+                menuContainer.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
+            }, 10);
+        }
+    });
+    
+    // Add event listeners to menu items
+    const menuItems = menuContainer.querySelectorAll('li a');
+    menuItems.forEach(item => {
+        // Add hover effect
+        item.addEventListener('mouseenter', function() {
+            this.style.transition = 'color 0.2s ease';
+            this.style.color = '#007bff';
+        });
+        
+        item.addEventListener('mouseleave', function() {
+            this.style.transition = 'color 0.2s ease';
+            this.style.color = '';
+        });
+        
+        // Add click effect
+        item.addEventListener('click', function() {
+            // Close menu when an item is clicked
+            menuContainer.classList.remove('visible');
+            
+            // Handle specific menu items
+            const menuText = this.textContent.toLowerCase();
+            
+            if (menuText.includes('custom clearance')) {
+                // Scroll to the custom clearance section
+                document.querySelector('.clearance-help').scrollIntoView({ behavior: 'smooth' });
+            } else if (menuText.includes('about us')) {
+                // Could implement a modal or scroll to about section
+                alert('About Us information coming soon!');
+            } else if (menuText.includes('faq')) {
+                alert('FAQ section coming soon!');
+            }
+        });
+    });
+    
+    // Close menu when clicking outside
+    document.addEventListener('click', function(event) {
+        if (menuContainer.classList.contains('visible') && 
+            !menuContainer.contains(event.target) && 
+            event.target !== menuButton) {
+            
+            menuContainer.style.opacity = '0';
+            menuContainer.style.transform = 'translateY(-10px)';
+            setTimeout(() => {
+                menuContainer.classList.remove('visible');
+                // Reset styles after animation
+                menuContainer.style.opacity = '';
+                menuContainer.style.transform = '';
+            }, 200);
+        }
+    });
+    
+    // Add CSS for smooth animation
+    const style = document.createElement('style');
+    style.textContent = `
+        #menu-container {
+            transition: opacity 0.2s ease, transform 0.2s ease;
+        }
+        
+        #menu-container ul li a {
+            position: relative;
+        }
+        
+        #menu-container ul li a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -2px;
+            left: 0;
+            background-color: #007bff;
+            transition: width 0.3s;
+        }
+        
+        #menu-container ul li a:hover::after {
+            width: 100%;
+        }
+    `;
+    document.head.appendChild(style);
+});
+        // Update the search button event listener
+        document.querySelector('.upload-button').addEventListener('click', function() {
+    window.open('upload.html');
+});
+        document.querySelector('.search-button').addEventListener('click', function () {
+            // Get filter values
+            const brand = document.getElementById('car-brand').value;
+            const model = document.getElementById('car-model').value;
+            const location = document.getElementById('location').value;
+            const customs = document.getElementById('customs-clearance').value;
+            const fuelType = document.getElementById('fuel-type').value;
+            const year = document.getElementById('year').value;
+            const minPrice = document.getElementById('price-min').value;
+            const maxPrice = document.getElementById('price-max').value;
+
+            // Create a filter summary
+            let filterSummary = 'Filters applied: ';
+            let filterCount = 0;
+
+            if (brand) {
+                filterSummary += `Brand: ${brand}, `;
+                filterCount++;
+            }
+            if (model) {
+                filterSummary += `Model: ${model}, `;
+                filterCount++;
+            }
+            if (location) {
+                filterSummary += `Location: ${location}, `;
+                filterCount++;
+            }
+            if (customs) {
+                filterSummary += `Customs: ${customs === 'with' ? 'With Clearance' : 'Without Clearance'}, `;
+                filterCount++;
+            }
+            if (fuelType) {
+                filterSummary += `Fuel: ${fuelType}, `;
+                filterCount++;
+            }
+            if (year) {
+                filterSummary += `Year: ${year}, `;
+                filterCount++;
+            }
+            if (minPrice) {
+                filterSummary += `Min Price: ${minPrice} PLN, `;
+                filterCount++;
+            }
+            if (maxPrice) {
+                filterSummary += `Max Price: ${maxPrice} PLN, `;
+                filterCount++;
+            }
+
+            // Remove trailing comma and space
+            if (filterCount > 0) {
+                filterSummary = filterSummary.slice(0, -2);
+            } else {
+                filterSummary += 'None';
+            }
+
+            // Display the filter summary
+            let filterSummaryElement = document.getElementById('filter-summary');
+            if (!filterSummaryElement) {
+                filterSummaryElement = document.createElement('div');
+                filterSummaryElement.id = 'filter-summary';
+                filterSummaryElement.style.margin = '20px auto';
+                filterSummaryElement.style.padding = '10px 20px';
+                filterSummaryElement.style.backgroundColor = '#f8f8f8';
+                filterSummaryElement.style.borderRadius = '8px';
+                filterSummaryElement.style.maxWidth = '1200px';
+                filterSummaryElement.style.fontSize = '14px';
+
+                const filterSection = document.querySelector('.filter-section');
+                filterSection.parentNode.insertBefore(filterSummaryElement, filterSection.nextSibling);
+            }
+            filterSummaryElement.textContent = filterSummary;
+
+            // Filter the cars
+            const carCards = document.querySelectorAll('.car-card');
+            let visibleCount = 0;
+
+            carCards.forEach(card => {
+                const cardTitle = card.querySelector('.car-title').textContent.toLowerCase();
+                const cardSpecs = card.querySelector('.car-specs').textContent.toLowerCase();
+                const cardPrice = parseFloat(card.querySelector('.car-price').textContent.replace(/[^\d]/g, ''));
+
+                let visible = true;
+
+                // Apply filters
+                if (brand && !cardTitle.includes(brand.toLowerCase())) {
+                    visible = false;
+                }
+
+                if (model && !cardTitle.toLowerCase().includes(model.toLowerCase())) {
+                    visible = false;
+                }
+
+                if (location && !cardSpecs.includes(location.toLowerCase())) {
+                    visible = false;
+                }
+
+                // Customs clearance would be a detail in the specs in a real application
+
+                if (fuelType && !cardSpecs.includes(fuelType.toLowerCase())) {
+                    visible = false;
+                }
+
+                if (year && !cardSpecs.includes(year)) {
+                    visible = false;
+                }
+
+                if (minPrice && cardPrice < parseInt(minPrice)) {
+                    visible = false;
+                }
+
+                if (maxPrice && cardPrice > parseInt(maxPrice)) {
+                    visible = false;
+                }
+
+                // Show/hide the card
+                card.style.display = visible ? 'block' : 'none';
+
+                if (visible) {
+                    visibleCount++;
+                }
+            });
+
+            // Update results count
+            let resultsCount = document.getElementById('results-count');
+            if (!resultsCount) {
+                resultsCount = document.createElement('div');
+                resultsCount.id = 'results-count';
+                resultsCount.style.margin = '20px auto 0';
+                resultsCount.style.padding = '0 20px';
+                resultsCount.style.maxWidth = '1200px';
+                resultsCount.style.fontWeight = 'bold';
+
+                const carsSection = document.querySelector('.cars-section');
+                carsSection.insertBefore(resultsCount, carsSection.firstChild);
+            }
+            resultsCount.textContent = `Found ${visibleCount} cars matching your criteria`;
+
+            // Scroll to results
+            document.getElementById('results-count').scrollIntoView({ behavior: 'smooth' });
+        });
+
+        // Add a clear filters button
+        const filterContainer = document.querySelector('.filter-container');
+        const clearButton = document.createElement('button');
+        clearButton.textContent = 'Clear Filters';
+        clearButton.className = 'clear-button';
+        clearButton.style.backgroundColor = '#f0f0f0';
+        clearButton.style.color = '#333';
+        clearButton.style.border = '1px solid #ddd';
+        clearButton.style.padding = '10px 20px';
+        clearButton.style.borderRadius = '4px';
+        clearButton.style.fontWeight = 'bold';
+        clearButton.style.cursor = 'pointer';
+        clearButton.style.marginTop = '10px';
+        clearButton.style.marginLeft = '10px';
+
+        clearButton.addEventListener('click', function () {
+            // Reset all select elements
+            document.querySelectorAll('.filter-item select').forEach(select => {
+                select.value = '';
+            });
+
+            // Reset all input elements
+            document.querySelectorAll('.filter-item input').forEach(input => {
+                input.value = '';
+            });
+
+            // Show all cars
+            document.querySelectorAll('.car-card').forEach(card => {
+                card.style.display = 'block';
+            });
+
+            // Clear filter summary if it exists
+            const filterSummary = document.getElementById('filter-summary');
+            if (filterSummary) {
+                filterSummary.textContent = 'Filters applied: None';
+            }
+
+            // Update results count
+            const resultsCount = document.getElementById('results-count');
+            if (resultsCount) {
+                resultsCount.textContent = `Found ${document.querySelectorAll('.car-card').length} cars`;
+            }
+        });
+
+        // Add the clear button next to the search button
+        document.querySelector('.filter-item:last-child').appendChild(clearButton);
+        // Toggle menu visibility
+        document.getElementById('manu').addEventListener('click', function () {
+            const menuContainer = document.getElementById('menu-container');
+            menuContainer.classList.toggle('visible');
+        });
+
+        // Close menu when clicking outside
+        document.addEventListener('click', function (event) {
+            const menuContainer = document.getElementById('menu-container');
+            const menuButton = document.getElementById('manu');
+
+            if (!menuContainer.contains(event.target) && event.target !== menuButton) {
+                menuContainer.classList.remove('visible');
+            }
+        });
+
+        // Filter functionality
+        document.querySelector('.search-button').addEventListener('click', function () {
+            // Get filter values
+            const brand = document.getElementById('car-brand').value;
+            const model = document.getElementById('car-model').value;
+            const location = document.getElementById('location').value;
+            const customs = document.getElementById('customs-clearance').value;
+            const fuelType = document.getElementById('fuel-type').value;
+            const year = document.getElementById('year').value;
+            const minPrice = document.getElementById('price-min').value;
+            const maxPrice = document.getElementById('price-max').value;
+
+            // In a real application, you would send these values to a server
+            // For now, we'll just log them to the console
+            console.log({
+                brand,
+                model,
+                location,
+                customs,
+                fuelType,
+                year,
+                minPrice,
+                maxPrice
+            });
+
+            // You could also show a loading indicator here
+            alert('Searching for cars matching your criteria...');
+        });
+
+        // Dynamic car model options based on selected brand
+        document.getElementById('car-brand').addEventListener('change', function () {
+            const brand = this.value;
+            const modelSelect = document.getElementById('car-model');
+
+            // Clear existing options
+            modelSelect.innerHTML = '<option value="">All Models</option>';
+
+            // Add relevant options based on brand
+            if (brand === 'audi') {
+                const models = ['A3', 'A4', 'A6', 'Q5', 'Q7'];
+                models.forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model.toLowerCase();
+                    option.textContent = model;
+                    modelSelect.appendChild(option);
+                });
+            } else if (brand === 'bmw') {
+                const models = ['1 Series', '3 Series', '5 Series', 'X3', 'X5'];
+                models.forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model.toLowerCase().replace(' ', '-');
+                    option.textContent = model;
+                    modelSelect.appendChild(option);
+                });
+            } else if (brand === 'mercedes') {
+                const models = ['A-Class', 'C-Class', 'E-Class', 'GLC', 'GLE'];
+                models.forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model.toLowerCase().replace('-', '');
+                    option.textContent = model;
+                    modelSelect.appendChild(option);
+                });
+            } else if (brand === 'volkswagen') {
+                const models = ['Golf', 'Passat', 'Tiguan', 'Polo', 'Arteon'];
+                models.forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model.toLowerCase();
+                    option.textContent = model;
+                    modelSelect.appendChild(option);
+                });
+            } else if (brand === 'toyota') {
+                const models = ['Corolla', 'RAV4', 'Camry', 'Yaris', 'C-HR'];
+                models.forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model.toLowerCase();
+                    option.textContent = model;
+                    modelSelect.appendChild(option);
+                });
+            } else if (brand === 'volvo') {
+                const models = ['XC40', 'XC60', 'XC90', 'S60', 'V60'];
+                models.forEach(model => {
+                    const option = document.createElement('option');
+                    option.value = model.toLowerCase();
+                    option.textContent = model;
+                    modelSelect.appendChild(option);
+                });
+            }
+        });
+
+    </script>
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                { pageLanguage: 'en,ka,uk,ru,pl' },
+                'google_translate_element'
+            );
+        } 
+    </script>
+    <script type="text/javascript"
+        src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+
+</body>
