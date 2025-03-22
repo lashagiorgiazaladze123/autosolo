@@ -4,107 +4,1742 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Auto Solo</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Winky+Sans:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
-    
-
+    <title>Auto Solo - Car Marketplace</title>
     <style>
-
-
-
-
-/* Header styling */
-header {
-    background-color: #ffffff;
-    padding: 15px 0;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+:root {
+    --primary-color: #E93535;
+    --primary-dark: #b82727;
+    --primary-light: rgba(233, 53, 53, 0.1);
+    --secondary-color: #333;
+    --text-color: #333;
+    --text-light: #666;
+    --bg-color: #f7f9fc;
+    --bg-light: #fff;
+    --border-color: #ddd;
+    --success-color: #28a745;
+    --warning-color: #fd0d0d;
+    --danger-color: #d92020;
+    --gray-100: #f8f9fa;
+    --gray-200: #e9ecef;
+    --gray-300: #dee2e6;
+    --box-shadow: 0 2px 15px rgba(0, 0, 0, 0.08);
+    --card-hover-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
+    --transition: all 0.3s ease;
+}
+/* Google Translate Element Custom Styling - Fixed Version */
+/* Styles for the custom model input */
+.custom-model-container {
+    margin-top: 10px;
+    transition: all 0.3s ease;
 }
 
+#custom-model {
+    width: 100%;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+/* Highlight for popular models */
+option[value="popular"] {
+    font-weight: bold;
+    background-color: #f0f8ff;
+}
+
+/* Add visual indicator for brand-specific models */
+.brand-specific-model {
+    color: #2c3e50;
+    font-weight: 500;
+}
+
+/* Responsive improvements */
+@media (max-width: 768px) {
+    .filter-row {
+        flex-direction: column;
+    }
+    
+    .filter-item {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+    
+    .custom-model-container {
+        width: 100%;
+    }
+}
 /* Main container */
+/* Google Translate Element Custom Styling with Vertical Language List */
+
+/* Custom Google Translate Styling */
+#custom-google-translate {
+    position: relative;
+    font-family: 'Arial', sans-serif;
+    margin: 10px 0;
+    width: 200px;
+    z-index: 9999;
+}
+
+.translate-button {
+    display: flex;
+    align-items: center;
+    padding: 8px 12px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    cursor: pointer;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+    transition: all 0.2s;
+}
+
+.translate-button:hover {
+    background-color: #f8f8f8;
+    border-color: #ccc;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.translate-icon {
+    margin-right: 8px;
+    font-size: 16px;
+}
+
+.translate-text {
+    font-size: 14px;
+    color: #333;
+}
+
+.language-dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    max-height: 300px;
+    overflow-y: auto;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-top: 4px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    display: none;
+    z-index: 10000;
+}
+
+.language-dropdown.show {
+    display: block;
+}
+
+.language-option {
+    padding: 8px 12px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-size: 14px;
+    color: #333;
+}
+
+.language-option:hover {
+    background-color: #f0f5ff;
+}
+
+.language-option.selected {
+    background-color: #e8f0fd;
+    font-weight: 500;
+}
+
+/* Scrollbar styling */
+.language-dropdown::-webkit-scrollbar {
+    width: 8px;
+}
+
+.language-dropdown::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.language-dropdown::-webkit-scrollbar-thumb {
+    background: #c1c1c1;
+    border-radius: 4px;
+}
+
+.language-dropdown::-webkit-scrollbar-thumb:hover {
+    background: #a8a8a8;
+}
+.input-with-currency {
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.input-with-currency input {
+    width: 100%;
+    padding: 8px 12px;
+    padding-right: 60px; /* Space for currency selector */
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+.currency-selector {
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+    padding: 0 10px;
+    border-left: 1px solid #ddd;
+    background-color: #f9f9f9;
+    border-radius: 0 4px 4px 0;
+}
+
+.currency-selector:hover {
+    background-color: #f0f0f0;
+}
+
+.selected-currency {
+    font-weight: 500;
+    color: #333;
+}
+
+.currency-dropdown {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 100%;
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 0 0 4px 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    display: none;
+    z-index: 10;
+}
+
+.currency-selector.active .currency-dropdown {
+    display: block;
+}
+
+.currency-option {
+    padding: 8px 12px;
+    transition: background-color 0.2s;
+}
+
+.currency-option:hover {
+    background-color: #f0f0f0;
+}
+
+.currency-option.selected {
+    background-color: #e9f5ff;
+    font-weight: 500;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    line-height: 1.6;
+    color: var(--text-color);
+    background-color: var(--bg-color);
+    font-size: 16px;
+}
+
+a {
+    text-decoration: none;
+    color: var(--primary-color);
+    transition: var(--transition);
+}
+
+a:hover {
+    color: var(--primary-dark);
+}
+
+ul {
+    list-style: none;
+}
+
+/* Header Styles */
+header {
+    background-color: var(--bg-light);
+    box-shadow: var(--box-shadow);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+#container {
+    max-width: 1280px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+}
+
+.logo img {
+    height: 10px;
+    border-radius: 6px;
+    transition: var(--transition);
+}
+
+.logo img:hover {
+    transform: scale(1.05);
+}
+
+.right-controls {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.upload-button {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 30px;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+    box-shadow: 0 4px 10px rgba(233, 53, 53, 0.3);
+}
+
+.upload-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(233, 53, 53, 0.4);
+}
+
+.upload-button p {
+    margin: 0;
+}
+
+.icon-controls {
+    display: flex;
+    gap: 20px;
+}
+
+.icon-controls img {
+    width: 24px;
+    height: 24px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.icon-controls img:hover {
+    transform: scale(1.1);
+}
+
+#menu-container {
+    display: none;
+    background-color: var(--bg-light);
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 100%;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+    z-index: 50;
+}
+
+#menu-container.active {
+    display: block;
+    animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+#menu-container ul {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+}
+
+#menu-container a {
+    color: var(--text-color);
+    font-weight: 500;
+    padding: 5px 0;
+    position: relative;
+}
+
+#menu-container a::after {
+    content: '';
+    position: absolute;
+    width: 0;
+    height: 2px;
+    bottom: 0;
+    left: 0;
+    background-color: var(--primary-color);
+    transition: var(--transition);
+}
+
+#menu-container a:hover {
+    color: var(--primary-color);
+}
+
+#menu-container a:hover::after {
+    width: 100%;
+}
+
+#google_translate_element {
+    margin: 15px auto;
+    max-width: 1280px;
+    padding: 0 20px;
+}
+
+/* Clearance Help Section */
+.clearance-help {
+    background-color: var(--bg-light);
+    border-left: 4px solid var(--primary-color);
+    padding: 16px 20px;
+    margin: 25px auto;
+    max-width: 1280px;
+    border-radius: 0 8px 8px 0;
+    box-shadow: var(--box-shadow);
+    font-weight: 500;
+}
+
+.clearance-help a {
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+/* Filter Section */
+.filter-section {
+    max-width: 1280px;
+    margin: 25px auto;
+    padding: 0 20px;
+}
+
+.filter-container {
+    background-color: var(--bg-light);
+    border-radius: 12px;
+    box-shadow: var(--box-shadow);
+    padding: 25px;
+}
+
+#newImg{
+    width: 170px;
+    height: 30%;
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.filter-row:last-child {
+    margin-bottom: 0;
+}
+
+.filter-item {
+    flex: 1;
+    min-width: 200px;
+}
+
+.filter-item label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+.filter-item select,
+.filter-item input {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 15px;
+    transition: var(--transition);
+    background-color: var(--gray-100);
+}
+
+.filter-item select:focus,
+.filter-item input:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(233, 53, 53, 0.15);
+    background-color: white;
+}
+
+.search-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    transition: var(--transition);
+    width: 100%;
+    margin-top: 28px;
+    box-shadow: 0 4px 10px rgba(233, 53, 53, 0.3);
+}
+
+.search-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(233, 53, 53, 0.4);
+}
+
+.advanced-filters-button {
+    background-color: white;
+    color: var(--primary-color);
+    border: 2px solid var(--primary-color);
+    padding: 12px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 15px;
+    transition: var(--transition);
+    width: 100%;
+    margin-top: 12px;
+}
+
+.search-container {
+    display: flex;
+    margin-top: 10px;
+    padding: 5px;
+    background-color: #f5f5f5;
+    border-radius: 4px;
+}
+
+.search-input {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px 0 0 4px;
+    outline: none;
+}
+
+.search-submit {
+    padding: 8px 15px;
+    background-color: #e83535;
+    color: white;
+    border: none;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+}
+
+.search-submit:hover {
+    background-color: #e72121;
+}
+
+.advanced-filters-button:hover {
+    background-color: var(--primary-light);
+    transform: translateY(-2px);
+}
+
+.advanced-filters {
+    margin-top: 25px;
+    padding-top: 25px;
+    border-top: 1px solid var(--border-color);
+    animation: fadeInDown 0.4s ease;
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.features-container {
+    margin-top: 25px;
+    background-color: var(--gray-100);
+    padding: 20px;
+    border-radius: 8px;
+}
+
+.features-label {
+    display: block;
+    margin-bottom: 15px;
+    font-weight: 600;
+    color: var(--secondary-color);
+}
+
+.features-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: var(--transition);
+    padding: 8px;
+    border-radius: 6px;
+}
+
+.checkbox-item:hover {
+    background-color: var(--primary-light);
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    accent-color: var(--primary-color);
+}
+
+.checkbox-item label {
+    cursor: pointer;
+    font-weight: 500;
+}
+
+.apply-filters-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 16px;
+    transition: var(--transition);
+    width: 100%;
+    box-shadow: 0 4px 10px rgba(233, 53, 53, 0.3);
+}
+
+.apply-filters-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(233, 53, 53, 0.4);
+}
+
+.reset-filters-button {
+    background-color: white;
+    color: var(--text-color);
+    border: 1px solid var(--border-color);
+    padding: 13px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 15px;
+    transition: var(--transition);
+    width: 100%;
+    margin-top: 12px;
+}
+
+.reset-filters-button:hover {
+    background-color: var(--gray-200);
+}
+
+.full-width {
+    grid-column: 1 / -1;
+}
+
+/* Cars Section */
+.cars-section {
+    max-width: 1280px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+.cars-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 30px;
+}
+
+.car-card {
+    background-color: var(--bg-light);
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    cursor: pointer;
+    position: relative;
+}
+
+.car-card:hover {
+    transform: translateY(-8px);
+    box-shadow: var(--card-hover-shadow);
+}
+
+.car-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background-color: var(--primary-color);
+    transition: var(--transition);
+}
+
+.car-card:hover::after {
+    width: 100%;
+}
+
+.car-image {
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+}
+
+.car-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: var(--transition);
+}
+
+.car-card:hover .car-image img {
+    transform: scale(1.05);
+}
+
+.car-details {
+    padding: 20px;
+}
+
+.car-title {
+    font-size: 18px;
+    font-weight: 700;
+    margin-bottom: 10px;
+    color: var(--secondary-color);
+}
+
+.car-specs {
+    color: var(--text-light);
+    font-size: 15px;
+    margin-bottom: 12px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+}
+
+.car-price {
+    font-weight: 700;
+    font-size: 20px;
+    color: var(--primary-color);
+    position: relative;
+    display: inline-block;
+}
+
+.car-price::after {
+    content: '';
+    position: absolute;
+    bottom: -3px;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background-color: var(--primary-color);
+    opacity: 0.3;
+}
+
+/* Pagination */
+.pagination-section {
+    max-width: 1280px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+.pagination-container {
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: flex;
+    gap: 8px;
+}
+
+.pagination-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 8px;
+    background-color: var(--bg-light);
+    color: var(--text-color);
+    font-weight: 600;
+    transition: var(--transition);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.pagination-link:hover {
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(233, 53, 53, 0.2);
+}
+
+.pagination-link.active {
+    background-color: var(--primary-color);
+    color: white;
+    box-shadow: 0 5px 15px rgba(233, 53, 53, 0.3);
+}
+
+/* Footer Styles */
+footer {
+    background-color: #2a2a2a;
+    color: white;
+    padding: 50px 0 30px;
+    margin-top: 60px;
+}
+
+footer .container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+footer .row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 30px;
+}
+
+footer .column {
+    flex: 1;
+    min-width: 220px;
+    margin-bottom: 30px;
+}
+
+footer h3 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    font-weight: 600;
+    color: white;
+    position: relative;
+    padding-bottom: 12px;
+}
+
+footer h3::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    height: 3px;
+    width: 40px;
+    background-color: var(--primary-color);
+}
+
+footer p,
+footer li {
+    line-height: 1.8;
+    font-size: 15px;
+    color: #ccc;
+}
+
+footer ul {
+    list-style: none;
+    padding: 0;
+}
+
+footer li {
+    margin-bottom: 12px;
+}
+
+footer a {
+    color: #ddd;
+    text-decoration: none;
+    transition: var(--transition);
+    display: inline-block;
+}
+
+footer a:hover {
+    color: white;
+    transform: translateX(5px);
+}
+
+footer .newsletter {
+    display: flex;
+    margin-top: 15px;
+}
+
+footer input[type="email"] {
+    flex: 1;
+    padding: 12px 15px;
+    border: none;
+    border-radius: 8px 0 0 8px;
+    font-size: 15px;
+}
+
+footer .subscribe-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 12px 18px;
+    border-radius: 0 8px 8px 0;
+    cursor: pointer;
+    font-weight: 600;
+    transition: var(--transition);
+}
+
+footer .subscribe-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+footer .copyright {
+    margin-top: 40px;
+    padding-top: 20px;
+    border-top: 1px solid #444;
+    text-align: center;
+    font-size: 14px;
+    color: #aaa;
+}
+
+/* Responsive styles */
+@media (max-width: 992px) {
+    .cars-container {
+        grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    }
+}
+
+@media (max-width: 768px) {
+    #container {
+        padding: 12px 15px;
+    }
+    
+    .logo img {
+        height: 50px;
+    }
+    
+    .right-controls {
+        gap: 15px;
+    }
+    
+    .upload-button {
+        padding: 8px 15px;
+        font-size: 14px;
+    }
+    
+    .filter-item {
+        min-width: 100%;
+    }
+    
+    .cars-container {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 20px;
+    }
+    
+    .car-image {
+        height: 180px;
+    }
+    
+    footer .column {
+        flex: 0 0 100%;
+    }
+}
+
+@media (max-width: 576px) {
+    .filter-container {
+        padding: 15px;
+    }
+    
+    .cars-container {
+        grid-template-columns: 1fr;
+    }
+    
+    .car-image {
+        height: 200px;
+    }
+    
+    .pagination-link {
+        width: 40px;
+        height: 40px;
+    }
+}
+
+/* Animation for page load */
+@keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.filter-section,
+.cars-section,
+.pagination-section {
+    animation: fadeUp 0.6s ease-out;
+}
+
+/* Additional Enhancements */
+.car-specs::before {
+    content: '•';
+    margin-right: 5px;
+    color: var(--primary-color);
+}
+
+::selection {
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+}
+/* Custom Tooltip Styles */
+[data-tooltip] {
+    position: relative;
+    cursor: help;
+}
+
+[data-tooltip]::after {
+    content: attr(data-tooltip);
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 10;
+    pointer-events: none;
+}
+
+[data-tooltip]::before {
+    content: '';
+    position: absolute;
+    bottom: 125%;
+    left: 50%;
+    transform: translateX(-50%) translateY(6px);
+    border-width: 6px 6px 0;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.8) transparent transparent;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    z-index: 10;
+}
+
+[data-tooltip]:hover::after,
+[data-tooltip]:hover::before {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(-6px);
+}
+
+/* Enhanced Filter Badges */
+.filter-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    background-color: var(--primary-light);
+    color: var(--primary-dark);
+    padding: 5px 12px;
+    border-radius: 20px;
+    margin: 5px;
+    font-size: 14px;
+    font-weight: 500;
+    transition: var(--transition);
+}
+
+.filter-badge:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.filter-badge .close-icon {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.active-filters-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 15px;
+    margin-bottom: 15px;
+    padding: 10px 15px;
+    background-color: var(--gray-100);
+    border-radius: 8px;
+}
+
+/* Car Card Badge */
+.car-status-badge {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 5px 12px;
+    border-radius: 4px;
+    font-size: 13px;
+    font-weight: 600;
+    z-index: 5;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+}
+
+.car-status-badge.new {
+    background-color: var(--success-color);
+}
+
+.car-status-badge.imported {
+    background-color: #6a5acd;
+}
+
+/* Enhanced Car Details */
+.car-specs-icons {
+    display: flex;
+    gap: 15px;
+    margin: 12px 0;
+}
+
+.car-spec-item {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    color: var(--text-light);
+    font-size: 14px;
+}
+
+.car-spec-item i {
+    color: var(--primary-color);
+    font-size: 16px;
+}
+
+.car-card .car-details {
+    position: relative;
+}
+
+.car-card .favorite-button {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    background: white;
+    border: none;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    transition: var(--transition);
+}
+
+.car-card .favorite-button:hover {
+    transform: scale(1.1);
+}
+
+.car-card .favorite-button i {
+    color: var(--text-light);
+    font-size: 16px;
+    transition: var(--transition);
+}
+
+.car-card .favorite-button:hover i {
+    color: var(--primary-color);
+}
+
+.car-card .favorite-button.active i {
+    color: var(--primary-color);
+}
+
+/* Custom Select Styling */
+.custom-select-container {
+    position: relative;
+}
+
+.custom-select-container select {
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg fill='%23666' height='24' viewBox='0 0 24 24' width='24' xmlns='http://www.w3.org/2000/svg'><path d='M7 10l5 5 5-5z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    padding-right: 30px;
+}
+
+/* Sort Controls */
+.sort-controls {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.sort-dropdown {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.sort-dropdown label {
+    font-weight: 500;
+}
+
+.sort-dropdown select {
+    padding: 8px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+    background-color: white;
+}
+
+.view-controls {
+    display: flex;
+    gap: 10px;
+}
+
+.view-controls button {
+    background: none;
+    border: 1px solid var(--border-color);
+    width: 40px;
+    height: 40px;
+    border-radius: 6px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.view-controls button:hover {
+    background-color: var(--primary-light);
+    border-color: var(--primary-color);
+}
+
+.view-controls button.active {
+    background-color: var(--primary-light);
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+}
+
+/* List View */
+.cars-container.list-view {
+    display: block;
+}
+
+.cars-container.list-view .car-card {
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    margin-bottom: 20px;
+    height: auto;
+}
+
+.cars-container.list-view .car-image {
+    height: 100%;
+}
+
+.cars-container.list-view .car-details {
+    padding: 20px;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 20px;
+}
+
+.cars-container.list-view .car-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.cars-container.list-view .car-price {
+    font-size: 24px;
+    align-self: center;
+}
+
+@media (max-width: 768px) {
+    .cars-container.list-view .car-card {
+        grid-template-columns: 1fr;
+    }
+    
+    .cars-container.list-view .car-image {
+        height: 200px;
+    }
+    
+    .cars-container.list-view .car-details {
+        grid-template-columns: 1fr;
+    }
+}
+
+/* Enhanced Upload Button */
+.upload-button {
+    position: relative;
+    overflow: hidden;
+}
+
+.upload-button input[type="file"] {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Image Slider in Car Cards */
+.car-image-slider {
+    position: relative;
+    height: 100%;
+}
+
+.car-image-slider .slide {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    transition: opacity 0.5s ease;
+}
+
+.car-image-slider .slide.active {
+    opacity: 1;
+}
+
+.car-image-slider .slider-controls {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 8px;
+    z-index: 5;
+}
+
+.car-image-slider .slider-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.5);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.car-image-slider .slider-dot.active {
+    background-color: white;
+    transform: scale(1.2);
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--gray-100);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--gray-300);
+    border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-light);
+}
+
+
+.loader {
+    display: inline-block;
+    width: 40px;
+    height: 40px;
+    border: 3px solid rgba(233, 53, 53, 0.3);
+    border-radius: 50%;
+    border-top-color: var(--primary-color);
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-container {
+    display: flex;
+    justify-content: center;
+    padding: 40px 0;
+}
+
+/* Compare Feature */
+.compare-button {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    width: 60px;
+    height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    cursor: pointer;
+    transition: var(--transition);
+    z-index: 20;
+}
+
+.compare-button:hover {
+    transform: scale(1.1);
+    background-color: var(--primary-dark);
+}
+
+.compare-button i {
+    font-size: 24px;
+}
+
+.compare-count {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: white;
+    color: var(--primary-color);
+    border-radius: 50%;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+/* Animation for Car Cards on Scroll */
+.car-card {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.5s ease, transform 0.5s ease;
+}
+
+.car-card.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Theme Toggle Switch */
+.theme-toggle {
+    display: flex;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.theme-toggle-label {
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+    background-color: var(--gray-300);
+    border-radius: 13px;
+    position: relative;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.theme-toggle-label::after {
+    content: "";
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 20px;
+    height: 20px;
+    background-color: white;
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.theme-toggle-checkbox {
+    display: none;
+}
+
+.theme-toggle-checkbox:checked + .theme-toggle-label {
+    background-color: var(--primary-color);
+}
+
+.theme-toggle-checkbox:checked + .theme-toggle-label::after {
+    transform: translateX(24px);
+}
+
+/* Dark Theme Styles */
+body.dark-theme {
+    --bg-color: #1a1a1a;
+    --bg-light: #2a2a2a;
+    --text-color: #f0f0f0;
+    --text-light: #aaa;
+    --border-color: #444;
+    --gray-100: #333;
+    --gray-200: #444;
+    --gray-300: #555;
+    --box-shadow: 0 2px 15px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .car-title {
+    color: #f0f0f0;
+}
+
+body.dark-theme footer {
+    background-color: #222;
+}
+
+body.dark-theme .filter-item select,
+body.dark-theme .filter-item input {
+    background-color: #333;
+    color: #f0f0f0;
+}
+
+body.dark-theme .reset-filters-button {
+    color: #f0f0f0;
+}
+
+/* Price Range Slider */
+.price-range-container {
+    padding: 10px 0;
+}
+
+.price-slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 5px;
+    border-radius: 5px;
+    background: var(--gray-200);
+    outline: none;
+    margin: 15px 0;
+}
+
+.price-slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background: var(--primary-color);
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.price-slider::-webkit-slider-thumb:hover {
+    transform: scale(1.2);
+}
+
+.price-range-values {
+    display: flex;
+    justify-content: space-between;
+    font-size: 14px;
+    color: var(--text-light);
+    margin-top: 5px;
+}
+
+/* Floating Quick Info */
+.quick-info {
+    position: fixed;
+    top: 50%;
+    right: -300px;
+    transform: translateY(-50%);
+    width: 280px;
+    background-color: var(--bg-light);
+    border-radius: 10px 0 0 10px;
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+    transition: right 0.4s ease;
+    z-index: 90;
+}
+
+.quick-info.active {
+    right: 0;
+}
+
+.quick-info-toggle {
+    position: absolute;
+    top: 50%;
+    left: -40px;
+    transform: translateY(-50%);
+    background-color: var(--primary-color);
+    color: white;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px 0 0 10px;
+    cursor: pointer;
+    box-shadow: -2px 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.quick-info h3 {
+    margin-bottom: 15px;
+    font-size: 18px;
+    border-bottom: 2px solid var(--primary-light);
+    padding-bottom: 8px;
+}
+
+.quick-info-item {
+    margin-bottom: 15px;
+}
+
+.quick-info-item p {
+    font-size: 14px;
+    line-height: 1.5;
+}
+
+/* Notifications */
+.notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: white;
+    border-left: 4px solid var(--primary-color);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    padding: 15px 20px;
+    border-radius: 4px;
+    z-index: 100;
+    transform: translateX(120%);
+    transition: transform 0.3s ease;
+}
+
+.notification.show {
+    transform: translateX(0);
+}
+
+.notification-content {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.notification-icon {
+    width: 24px;
+    height: 24px;
+    color: var(--primary-color);
+}
+
+.notification-message {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.notification-close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: var(--text-light);
+}
+
+/* Additional responsive adjustments */
+@media (max-width: 480px) {
+    .upload-button p {
+        display: none;
+    }
+    
+    .upload-button {
+        padding: 10px;
+        border-radius: 50%;
+    }
+    
+    .filter-row {
+        gap: 15px;
+    }
+    
+    .features-checkboxes {
+        grid-template-columns: 1fr 1fr;
+    }
+    
+    .compare-button {
+        width: 50px;
+        height: 50px;
+        bottom: 20px;
+        right: 20px;
+    }
+    /* Header Styles */
+header {
+    width: 100%;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
 #container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
+    padding: 15px 20px;
+    max-width: 1400px;
     margin: 0 auto;
-    padding: 0 20px;
-    position: relative;
 }
 
-/* Logo styling */
-.logo {
-    display: flex;
-    align-items: center;
-
-}
-
-#newImg {
-    height: 100px;
-    width: 100px;
+.logo img {
+    height: 60px;
     object-fit: contain;
 }
 
-/* Right side controls */
 .right-controls {
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-/* Upload button */
 .upload-button {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
+    background-color: var(--primary-color);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 6px;
+    font-weight: 500;
     cursor: pointer;
+    transition: var(--transition);
 }
 
-.upload-button p {
-    font-weight: bold;
-    font-size: 16px;
+.upload-button:hover {
+    background-color: var(--primary-dark);
+    transform: translateY(-2px);
 }
 
 .upload-icon {
-    width: 24px;
-    height: 24px;
+    width: 20px;
+    height: 20px;
 }
 
-/* Icon controls */
 .icon-controls {
     display: flex;
     align-items: center;
     gap: 15px;
 }
 
-#myImg, #manu {
+.icon-controls img {
     width: 24px;
     height: 24px;
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: var(--transition);
 }
 
-#myImg:hover, #manu:hover {
+.icon-controls img:hover {
     transform: scale(1.1);
 }
 
-/* Menu container */
+/* Menu Container */
 #menu-container {
-    position: absolute;
-    top: 100%;
-    right: 20px;
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 280px;
+    height: 100vh;
     background-color: white;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
-    width: 220px;
-    z-index: 100;
-    display: none;
-    overflow: hidden;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 150;
+    transition: right 0.3s ease;
+    padding: 30px 0;
+    overflow-y: auto;
 }
 
-#menu-container.visible {
-    display: block;
+#menu-container.active {
+    right: 0;
 }
 
 #menu-container ul {
@@ -112,236 +1747,403 @@ header {
 }
 
 #menu-container ul li {
-    padding: 14px 18px;
-    border-bottom: 1px solid #eee;
-    transition: background 0.3s;
-}
-
-#menu-container ul li:last-child {
-    border-bottom: none;
+    margin-bottom: 10px;
 }
 
 #menu-container ul li a {
-    text-decoration: none;
-    color: #333;
     display: block;
+    padding: 12px 25px;
+    color: var(--text-color);
     font-weight: 500;
-}
-
-#menu-container ul li:hover {
-    background: rgba(0, 0, 0, 0.05);
+    transition: var(--transition);
 }
 
 #menu-container ul li a:hover {
-    color: #007bff;
+    background-color: var(--primary-light);
+    color: var(--primary-color);
 }
 
-/* Google Translate */
+/* Google Translate Element */
 #google_translate_element {
-    position: absolute;
-    top: 10px;
-    right: 20px;
+    margin-top: 20px;
+    padding: 0 25px;
 }
 
-
-
-        /* Custom clearance help */
-        .clearance-help {
-            background-color: #f0f0f0;
-            padding: 10px 0;
-            text-align: center;
-        }
-
-        .clearance-help a {
-            color: #d00;
-            text-decoration: none;
-            font-weight: bold;
-        }
-
-        .clearance-help a:hover {
-            text-decoration: underline;
-        }
-
-        /* Filter section */
-        .filter-section {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-
-        .filter-container {
-            background-color: #f8f8f8;
-            border-radius: 8px;
-            padding: 20px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .filter-row {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 15px;
-            margin-bottom: 15px;
-        }
-
-        .filter-item {
-            flex: 1;
-            min-width: 200px;
-        }
-
-        .filter-item label {
-            display: block;
-            margin-bottom: 5px;
-            font-weight: bold;
-            font-size: 14px;
-        }
-
-        .filter-item select,
-        .filter-item input {
-            width: 100%;
-            padding: 8px 10px;
-            border: 1px solid #ddd;
-            border-radius: 4px;
-            font-size: 14px;
-        }
-
-        .search-button {
-            background-color: #ff0000;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 4px;
-            font-weight: bold;
-            cursor: pointer;
-            font-size: 16px;
-            margin-top: 20px;
-            margin-left: 20px;
-        }
-
-        .search-button:hover {
-            background-color: #cc0000;
-        }
-
-        /* Cars result section */
-        .cars-section {
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-
-        .cars-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 20px;
-        }
-
-        .car-card {
-            border: 1px solid #eee;
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-
-        .car-image {
-            width: 100%;
-            height: 200px;
-            background-color: #f0f0f0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .car-details {
-            padding: 15px;
-        }
-
-        .car-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 10px;
-        }
-
-        .car-specs {
-            font-size: 14px;
-            color: #666;
-            margin-bottom: 10px;
-        }
-
-        .car-price {
-            font-size: 20px;
-            font-weight: bold;
-            color: red;
-        }
-
-        #myP {
-            color: hsl(0, 0%, 100%);
-        }
-
-        /* Disable translation on these specific elements */
-        #myH1[translate="no"],
-        #myP[translate="no"] {
-
-            font-family: inherit !important;
-            text-align: inherit !important;
-        }
-
-        #newId {
-            cursor: pointer;
-            margin-left: 380px;
-            
-        }
-        #newP{
-            margin-left: 345px;
-            font-weight: bold;
-            font-size: 20px;
-        }
-        #newImg {
-    height: 140px; /* Increased height */
-    width: 180px;  /* Increased width */
-    object-fit: contain;
-    
+/* Clearance Help Section */
+.clearance-help {
+    background-color: var(--primary-light);
+    padding: 12px 20px;
+    text-align: center;
+    font-weight: 500;
+    color: var(--primary-dark);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
-/* Filter button styling */
-.search-button {
-    background-color: #e53935; /* Red color to match the theme */
+
+.clearance-help a {
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+/* Filter Section */
+.filter-section {
+    background-color: var(--bg-light);
+    padding: 20px 0;
+}
+
+.filter-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+}
+
+.filter-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.filter-row:last-child {
+    margin-bottom: 0;
+}
+
+.filter-item {
+    flex: 1;
+    min-width: 250px;
+}
+
+.filter-item label {
+    display: block;
+    margin-bottom: 8px;
+    font-weight: 500;
+    color: var(--text-color);
+}
+
+.filter-item select,
+.filter-item input {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background-color: var(--bg-color);
+    font-size: 14px;
+    transition: var(--transition);
+}
+
+.filter-item select:focus,
+.filter-item input:focus {
+    border-color: var(--primary-color);
+    outline: none;
+    box-shadow: 0 0 0 2px var(--primary-light);
+}
+
+.search-button,
+.apply-filters-button {
+    width: 100%;
+    padding: 12px;
+    background-color: var(--primary-color);
     color: white;
     border: none;
-    border-radius: 4px;
-    padding: 10px 20px;
-    font-weight: bold;
+    border-radius: 6px;
+    font-weight: 500;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: var(--transition);
 }
 
-.search-button:hover {
-    background-color: #c62828; /* Darker red on hover */
+.search-button:hover,
+.apply-filters-button:hover {
+    background-color: var(--primary-dark);
 }
 
-.advanced-filters-button {
-    background-color: #f5f5f5;
-    color: #333;
-    border: 1px solid #ddd;
-    border-radius: 4px;
-    padding: 10px 20px;
-    margin-left: 10px;
+.advanced-filters-button,
+.reset-filters-button {
+    width: 100%;
+    padding: 12px;
+    background-color: transparent;
+    color: var(--primary-color);
+    border: 1px solid var(--primary-color);
+    border-radius: 6px;
+    font-weight: 500;
+    margin-top: 10px;
     cursor: pointer;
-    transition: background-color 0.3s;
+    transition: var(--transition);
 }
 
-.advanced-filters-button:hover {
-    background-color: #e0e0e0;
+.advanced-filters-button:hover,
+.reset-filters-button:hover {
+    background-color: var(--primary-light);
 }
 
-/* You can also add active state styling for when the advanced filters are shown */
-.advanced-filters-button.active {
-    background-color: #e0e0e0;
-    border-color: #bbb;
+/* Features Checkboxes */
+.features-container {
+    margin-bottom: 20px;
+    width: 100%;
 }
 
+.features-label {
+    display: block;
+    margin-bottom: 12px;
+    font-weight: 500;
+    color: var(--text-color);
+}
 
-        /* Disable translation on these specific elements */
-        /* Disable translation on these specific elements */
+.features-checkboxes {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.checkbox-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.checkbox-item input[type="checkbox"] {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--primary-color);
+}
+
+.checkbox-item label {
+    font-weight: normal;
+    margin-bottom: 0;
+}
+
+/* Cars Section */
+.cars-section {
+    padding: 30px 0;
+}
+
+.cars-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 30px;
+    padding: 0 20px;
+}
+
+.car-card {
+    background-color: white;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+    height: 100%;
+    position: relative;
+}
+
+.car-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+}
+
+.car-image {
+    height: 220px;
+    overflow: hidden;
+    position: relative;
+}
+
+.car-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.car-card:hover .car-image img {
+    transform: scale(1.05);
+}
+
+.car-details {
+    padding: 15px;
+}
+
+.car-title {
+    font-size: 18px;
+    font-weight: 600;
+    margin-bottom: 8px;
+    color: var(--text-color);
+}
+
+.car-specs {
+    font-size: 14px;
+    color: var(--text-light);
+    margin-bottom: 10px;
+}
+
+.car-price {
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--primary-color);
+}
+
+/* Pagination */
+.pagination-section {
+    padding: 30px 0;
+}
+
+.pagination-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.pagination {
+    display: flex;
+    gap: 10px;
+}
+
+.pagination-link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 45px;
+    height: 45px;
+    border-radius: 6px;
+    background-color: white;
+    color: var(--text-color);
+    font-weight: 500;
+    box-shadow: var(--box-shadow);
+    transition: var(--transition);
+}
+
+.pagination-link:hover {
+    background-color: var(--primary-light);
+    color: var(--primary-color);
+}
+
+.pagination-link.active {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Footer */
+footer {
+    background-color: var(--secondary-color);
+    color: white;
+    padding: 50px 0 20px;
+}
+
+footer .container {
+    max-width: 1400px;
+    margin: 0 auto;
+    padding: 0 20px;
+}
+
+footer .row {
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 -15px;
+}
+
+footer .column {
+    flex: 1;
+    padding: 0 15px;
+    min-width: 250px;
+    margin-bottom: 30px;
+}
+
+footer h3 {
+    font-size: 18px;
+    margin-bottom: 20px;
+    position: relative;
+    padding-bottom: 10px;
+}
+
+footer h3::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 40px;
+    height: 3px;
+    background-color: var(--primary-color);
+}
+
+footer p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #ccc;
+    margin-bottom: 15px;
+}
+
+footer ul {
+    list-style: none;
+}
+
+footer ul li {
+    margin-bottom: 10px;
+}
+
+footer ul li a {
+    color: #ccc;
+    font-size: 14px;
+    transition: var(--transition);
+}
+
+footer ul li a:hover {
+    color: white;
+    padding-left: 5px;
+}
+
+.newsletter {
+    display: flex;
+    margin-top: 15px;
+}
+
+.newsletter input {
+    flex: 1;
+    padding: 10px 15px;
+    border: none;
+    border-radius: 4px 0 0 4px;
+    font-size: 14px;
+}
+
+.newsletter input:focus {
+    outline: none;
+}
+
+.subscribe-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 0 4px 4px 0;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.subscribe-btn:hover {
+    background-color: var(--primary-dark);
+}
+
+/* Overlay for menu */
+.menu-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 140;
+    opacity: 0;
+    visibility: hidden;
+    transition: var(--transition);
+}
+
+.menu-overlay.active {
+    opacity: 1;
+    visibility: visible;
+}
+}
+
     </style>
-    <link rel="stylesheet" href="index.css"> <!-- Adding back your original CSS file -->
 </head>
 
 <body>
@@ -349,19 +2151,23 @@ header {
         <div id="container">
             <!-- Logo on the left -->
             <div class="logo">
-                <img id="newImg" src="https://cdn.gencraft.com/prod/user/850acc5b-bdb6-4201-89fd-0b13df9e0057/a3d9f4d1-7401-4db3-bcef-988b8818e95a/image/image0_0.jpg?Expires=1742651813&Signature=W20GFTA~mBtlvJUnerXMg63wHgIrq8qlh~BGxIOzuv2lCgG89lCO4figr8kCNVCaUcWFl7Mg5Ee6f2e69tYDM6oebPi4iF8a32mwPYbzcCxPuJcw87TjuNoMQg0c1eJ1EwCmHLFc0MJsUlQxfGREUhYiAPCuztiQAEHy7lgWKIvlD3I9PSLPJLo04HTdSGp-Q0CAga8~4WK1pThrnKS0~PeNsH3Cc7cvWCJ0h8QDXKX4rE5AOz48qJO24Vux94i1KaLsDRHhbKwiHJ1-7uyJBt7PABKqxEZJ23ajQxHyCQ3JPUPh-pggbqdxjoO~HVUw4Jw7dPSawSeJsuuu54roaw__&Key-Pair-Id=K3RDDB1TZ8BHT8" alt="Auto Solo Logo">
+                <img id="newImg"
+                    src="https://cdn.gencraft.com/prod/user/850acc5b-bdb6-4201-89fd-0b13df9e0057/a3d9f4d1-7401-4db3-bcef-988b8818e95a/image/image0_0.jpg?Expires=1742651813&Signature=W20GFTA~mBtlvJUnerXMg63wHgIrq8qlh~BGxIOzuv2lCgG89lCO4figr8kCNVCaUcWFl7Mg5Ee6f2e69tYDM6oebPi4iF8a32mwPYbzcCxPuJcw87TjuNoMQg0c1eJ1EwCmHLFc0MJsUlQxfGREUhYiAPCuztiQAEHy7lgWKIvlD3I9PSLPJLo04HTdSGp-Q0CAga8~4WK1pThrnKS0~PeNsH3Cc7cvWCJ0h8QDXKX4rE5AOz48qJO24Vux94i1KaLsDRHhbKwiHJ1-7uyJBt7PABKqxEZJ23ajQxHyCQ3JPUPh-pggbqdxjoO~HVUw4Jw7dPSawSeJsuuu54roaw__&Key-Pair-Id=K3RDDB1TZ8BHT8"
+                    alt="Auto Solo Logo">
             </div>
-            
+
             <!-- Controls on the right -->
             <div class="right-controls">
                 <!-- Upload car button -->
                 <div class="upload-button">
-                    <p>Upload Car</p>
-                    <svg class="upload-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
-                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 5v9m-5 0H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2M8 9l4-5 4 5m1 8h.01" />
+                    <p id="upl">Upload Car</p>
+                    <svg class="upload-icon" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24"
+                        height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M12 5v9m-5 0H5a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h14a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-2M8 9l4-5 4 5m1 8h.01" />
                     </svg>
                 </div>
-                
+
                 <!-- Search and Menu icons -->
                 <div class="icon-controls">
                     <img id="myImg" src="search-interface-symbol.png" alt="search">
@@ -369,7 +2175,7 @@ header {
                 </div>
             </div>
         </div>
-    
+
         <!-- Menu container -->
         <div id="menu-container">
             <ul>
@@ -381,9 +2187,11 @@ header {
                 <li><a href="#">Custom Clearance Help</a></li>
             </ul>
         </div>
-        
+
         <!-- Google Translate Element -->
-        <div id="google_translate_element"></div>
+
+        
+        <div id="google_translate_element" style="display: none;"></div>
     </header>
 
     <!-- Custom clearance help section -->
@@ -392,254 +2200,270 @@ header {
     </div>
 
     <!-- Filter section -->
-   <!-- Filter section -->
-<section class="filter-section">
-    <div class="filter-container">
-        <!-- Keep the existing filter rows unchanged -->
-        <div class="filter-row">
-            <div class="filter-item">
-                <label for="car-brand">Car Brand</label>
-                <select id="car-brand">
-                    <option value="">All Brands</option>
-                    <option value="audi">Audi</option>
-                    <option value="bmw">BMW</option>
-                    <option value="mercedes">Mercedes</option>
-                    <option value="volkswagen">Volkswagen</option>
-                    <option value="toyota">Toyota</option>
-                    <option value="volvo">Volvo</option>
-                </select>
-            </div>
-            <div class="filter-item">
-                <label for="car-model">Car Model</label>
-                <select id="car-model">
-                    <option value="">All Models</option>
-                    <option value="a4">A4</option>
-                    <option value="a6">A6</option>
-                    <option value="3-series">3 Series</option>
-                    <option value="5-series">5 Series</option>
-                    <option value="e-class">E-Class</option>
-                    <option value="c-class">C-Class</option>
-                </select>
-            </div>
-            <div class="filter-item">
-                <label for="location">Location</label>
-                <select id="location">
-                    <option value="">All Locations</option>
-                    <option value="warsaw">Warsaw</option>
-                    <option value="krakow">Krakow</option>
-                    <option value="gdansk">Gdansk</option>
-                    <option value="wroclaw">Wroclaw</option>
-                    <option value="poznan">Poznan</option>
-                </select>
-            </div>
-        </div>
-        <div class="filter-row">
-            <div class="filter-item">
-                <label for="customs-clearance">Customs Clearance</label>
-                <select id="customs-clearance">
-                    <option value="">All</option>
-                    <option value="with">With Customs Clearance</option>
-                    <option value="without">Without Customs Clearance</option>
-                </select>
-            </div>
-            <div class="filter-item">
-                <label for="fuel-type">Fuel Type</label>
-                <select id="fuel-type">
-                    <option value="">All Fuel Types</option>
-                    <option value="petrol">Petrol</option>
-                    <option value="diesel">Diesel</option>
-                    <option value="hybrid">Hybrid</option>
-                    <option value="electric">Electric</option>
-                </select>
-            </div>
-            <div class="filter-item">
-                <label for="year">Year</label>
-                <select id="year">
-                    <option value="">All Years</option>
-                    <option value="2024">2024</option>
-                    <option value="2023">2023</option>
-                    <option value="2022">2022</option>
-                    <option value="2021">2021</option>
-                    <option value="2020">2020</option>
-                    <option value="2019">2019</option>
-                    <option value="2018">2018</option>
-                </select>
-            </div>
-        </div>
-        <div class="filter-row">
-            <div class="filter-item">
-                <label for="price-min">Price Min (PLN)</label>
-                <input type="number" id="price-min" placeholder="Min Price">
-            </div>
-            <div class="filter-item">
-                <label for="price-max">Price Max (PLN)</label>
-                <input type="number" id="price-max" placeholder="Max Price">
-            </div>
-            <div class="filter-item">
-                <button class="search-button">Search Cars</button>
-                <button class="advanced-filters-button" id="advanced-filters-toggle">Advanced Filters</button>
-            </div>
-        </div>
-
-        <!-- Enhanced Advanced Filters Section -->
-        <div class="advanced-filters" id="advanced-filters" style="display: none;">
-            <!-- Standard advanced filters (kept from original) -->
+    <section class="filter-section">
+        <div class="filter-container">
             <div class="filter-row">
                 <div class="filter-item">
-                    <label for="transmission">Transmission</label>
-                    <select id="transmission">
-                        <option value="">All Types</option>
-                        <option value="automatic">Automatic</option>
-                        <option value="manual">Manual</option>
-                        <option value="semi-automatic">Semi-Automatic</option>
+                    <label for="car-brand">Car Brand</label>
+                    <select id="car-brand">
+                        <option value="">All Brands</option>
+                        <option value="audi">Audi</option>
+                        <option value="bmw">BMW</option>
+                        <option value="mercedes">Mercedes</option>
+                        <option value="volkswagen">Volkswagen</option>
+                        <option value="toyota">Toyota</option>
+                        <option value="volvo">Volvo</option>
                     </select>
                 </div>
                 <div class="filter-item">
-                    <label for="mileage-max">Mileage Max (km)</label>
-                    <input type="number" id="mileage-max" placeholder="Max Mileage">
+                    <label for="car-model">Car Model</label>
+                    <select id="car-model">
+                        <option value="">All Models</option>
+                        <option value="a4">A4</option>
+                        <option value="a6">A6</option>
+                        <option value="3-series">3 Series</option>
+                        <option value="5-series">5 Series</option>
+                        <option value="e-class">E-Class</option>
+                        <option value="c-class">C-Class</option>
+                    </select>
                 </div>
                 <div class="filter-item">
-                    <label for="body-type">Body Type</label>
-                    <select id="body-type">
-                        <option value="">All Types</option>
-                        <option value="sedan">Sedan</option>
-                        <option value="suv">SUV</option>
-                        <option value="hatchback">Hatchback</option>
-                        <option value="wagon">Station Wagon</option>
-                        <option value="coupe">Coupe</option>
-                        <option value="convertible">Convertible</option>
+                    <label for="location">Location</label>
+                    <select id="location">
+                        <option value="">All Locations</option>
+                        <option value="warsaw">Warsaw</option>
+                        <option value="krakow">Krakow</option>
+                        <option value="gdansk">Gdansk</option>
+                        <option value="wroclaw">Wroclaw</option>
+                        <option value="poznan">Poznan</option>
                     </select>
                 </div>
             </div>
             <div class="filter-row">
                 <div class="filter-item">
-                    <label for="engine-size">Engine Size (L)</label>
-                    <select id="engine-size">
-                        <option value="">All Sizes</option>
-                        <option value="1.0-1.4">1.0 - 1.4</option>
-                        <option value="1.5-1.9">1.5 - 1.9</option>
-                        <option value="2.0-2.4">2.0 - 2.4</option>
-                        <option value="2.5-2.9">2.5 - 2.9</option>
-                        <option value="3.0+">3.0+</option>
-                    </select>
-                </div>
-                <div class="filter-item">
-                    <label for="color">Color</label>
-                    <select id="color">
-                        <option value="">All Colors</option>
-                        <option value="black">Black</option>
-                        <option value="white">White</option>
-                        <option value="silver">Silver</option>
-                        <option value="gray">Gray</option>
-                        <option value="blue">Blue</option>
-                        <option value="red">Red</option>
-                        <option value="other">Other</option>
-                    </select>
-                </div>
-                <div class="filter-item">
-                    <label for="owners">Previous Owners</label>
-                    <select id="owners">
-                        <option value="">Any</option>
-                        <option value="1">1 or fewer</option>
-                        <option value="2">2 or fewer</option>
-                        <option value="3+">3+</option>
-                    </select>
-                </div>
-            </div>
-            
-            <!-- New enhanced features section with checkboxes -->
-            <div class="features-container full-width">
-                <label class="features-label">Features</label>
-                <div class="features-checkboxes">
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="feature-leather" value="leather">
-                        <label for="feature-leather">Leather Seats</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="feature-sunroof" value="sunroof">
-                        <label for="feature-sunroof">Sunroof</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="feature-navigation" value="navigation">
-                        <label for="feature-navigation">Navigation</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="feature-camera" value="camera">
-                        <label for="feature-camera">Backup Camera</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="feature-heated" value="heated-seats">
-                        <label for="feature-heated">Heated Seats</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="feature-bluetooth" value="bluetooth">
-                        <label for="feature-bluetooth">Bluetooth</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="feature-cruise" value="cruise">
-                        <label for="feature-cruise">Cruise Control</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="feature-parking" value="parking">
-                        <label for="feature-parking">Parking Sensors</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="feature-climate" value="climate">
-                        <label for="feature-climate">Climate Control</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="feature-keyless" value="keyless">
-                        <label for="feature-keyless">Keyless Entry</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="feature-alloy" value="alloy">
-                        <label for="feature-alloy">Alloy Wheels</label>
-                    </div>
-                    <div class="checkbox-item">
-                        <input type="checkbox" id="feature-memory" value="memory">
-                        <label for="feature-memory">Memory Seats</label>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="filter-row">
-                <div class="filter-item">
-                    <label for="condition">Condition</label>
-                    <select id="condition">
-                        <option value="">All Conditions</option>
-                        <option value="new">New</option>
-                        <option value="like-new">Like New</option>
-                        <option value="excellent">Excellent</option>
-                        <option value="good">Good</option>
-                        <option value="fair">Fair</option>
-                    </select>
-                </div>
-                <div class="filter-item">
-                    <label for="import-status">Import Status</label>
-                    <select id="import-status">
+                    <label for="customs-clearance">Customs Clearance</label>
+                    <select id="customs-clearance">
                         <option value="">All</option>
-                        <option value="imported">Imported</option>
-                        <option value="local">Local</option>
+                        <option value="with">With Customs Clearance</option>
+                        <option value="without">Without Customs Clearance</option>
                     </select>
                 </div>
                 <div class="filter-item">
-                    <button class="apply-filters-button">Apply Filters</button>
-                    <button class="reset-filters-button">Reset Filters</button>
+                    <label for="fuel-type">Fuel Type</label>
+                    <select id="fuel-type">
+                        <option value="">All Fuel Types</option>
+                        <option value="petrol">Petrol</option>
+                        <option value="diesel">Diesel</option>
+                        <option value="hybrid">Hybrid</option>
+                        <option value="electric">Electric</option>
+                    </select>
+                </div>
+                <div class="filter-item">
+                    <label for="year">Year</label>
+                    <select id="year">
+                        <option value="">All Years</option>
+                        <option value="2024">2024</option>
+                        <option value="2023">2023</option>
+                        <option value="2022">2022</option>
+                        <option value="2021">2021</option>
+                        <option value="2020">2020</option>
+                        <option value="2019">2019</option>
+                        <option value="2018">2018</option>
+                    </select>
+                </div>
+            </div>
+            <div class="filter-row">
+                <div class="filter-item">
+                    <label for="price-min">Price Min</label>
+                    <div class="input-with-currency">
+                        <input type="number" id="price-min" placeholder="Min Price">
+                        <div class="currency-selector" id="min-currency-selector">
+                            <span class="selected-currency">PLN</span>
+                            <div class="currency-dropdown">
+                                <div class="currency-option" data-currency="PLN">PLN</div>
+                                <div class="currency-option" data-currency="USD">USD</div>
+                                <div class="currency-option" data-currency="EUR">EUR</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-item">
+                    <label for="price-max">Price Max</label>
+                    <div class="input-with-currency">
+                        <input type="number" id="price-max" placeholder="Max Price">
+                        <div class="currency-selector" id="max-currency-selector">
+                            <span class="selected-currency">PLN</span>
+                            <div class="currency-dropdown">
+                                <div class="currency-option" data-currency="PLN">PLN</div>
+                                <div class="currency-option" data-currency="USD">USD</div>
+                                <div class="currency-option" data-currency="EUR">EUR</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="filter-item">
+                    <button class="search-button">Search Cars</button>
+                    <button class="advanced-filters-button" id="advanced-filters-toggle">Advanced Filters</button>
+                </div>
+            </div>
+
+            <!-- Advanced Filters Section -->
+            <div class="advanced-filters" id="advanced-filters" style="display: none;">
+                <div class="filter-row">
+                    <div class="filter-item">
+                        <label for="transmission">Transmission</label>
+                        <select id="transmission">
+                            <option value="">All Types</option>
+                            <option value="automatic">Automatic</option>
+                            <option value="manual">Manual</option>
+                            <option value="semi-automatic">Semi-Automatic</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label for="mileage-max">Mileage Max (km)</label>
+                        <input type="number" id="mileage-max" placeholder="Max Mileage">
+                    </div>
+                    <div class="filter-item">
+                        <label for="body-type">Body Type</label>
+                        <select id="body-type">
+                            <option value="">All Types</option>
+                            <option value="sedan">Sedan</option>
+                            <option value="suv">SUV</option>
+                            <option value="hatchback">Hatchback</option>
+                            <option value="wagon">Station Wagon</option>
+                            <option value="coupe">Coupe</option>
+                            <option value="convertible">Convertible</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="filter-row">
+                    <div class="filter-item">
+                        <label for="engine-size">Engine Size (L)</label>
+                        <select id="engine-size">
+                            <option value="">All Sizes</option>
+                            <option value="1.0-1.4">1.0 - 1.4</option>
+                            <option value="1.5-1.9">1.5 - 1.9</option>
+                            <option value="2.0-2.4">2.0 - 2.4</option>
+                            <option value="2.5-2.9">2.5 - 2.9</option>
+                            <option value="3.0+">3.0+</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label for="color">Color</label>
+                        <select id="color">
+                            <option value="">All Colors</option>
+                            <option value="black">Black</option>
+                            <option value="white">White</option>
+                            <option value="silver">Silver</option>
+                            <option value="gray">Gray</option>
+                            <option value="blue">Blue</option>
+                            <option value="red">Red</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label for="owners">Previous Owners</label>
+                        <select id="owners">
+                            <option value="">Any</option>
+                            <option value="1">1 or fewer</option>
+                            <option value="2">2 or fewer</option>
+                            <option value="3+">3+</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Features Section -->
+                <div class="features-container full-width">
+                    <label class="features-label">Features</label>
+                    <div class="features-checkboxes">
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="feature-leather" value="leather">
+                            <label for="feature-leather">Leather Seats</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="feature-sunroof" value="sunroof">
+                            <label for="feature-sunroof">Sunroof</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="feature-navigation" value="navigation">
+                            <label for="feature-navigation">Navigation</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="feature-camera" value="camera">
+                            <label for="feature-camera">Backup Camera</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="feature-heated" value="heated-seats">
+                            <label for="feature-heated">Heated Seats</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="feature-bluetooth" value="bluetooth">
+                            <label for="feature-bluetooth">Bluetooth</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="feature-cruise" value="cruise">
+                            <label for="feature-cruise">Cruise Control</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="feature-parking" value="parking">
+                            <label for="feature-parking">Parking Sensors</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="feature-climate" value="climate">
+                            <label for="feature-climate">Climate Control</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="feature-keyless" value="keyless">
+                            <label for="feature-keyless">Keyless Entry</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="feature-alloy" value="alloy">
+                            <label for="feature-alloy">Alloy Wheels</label>
+                        </div>
+                        <div class="checkbox-item">
+                            <input type="checkbox" id="feature-memory" value="memory">
+                            <label for="feature-memory">Memory Seats</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="filter-row">
+                    <div class="filter-item">
+                        <label for="condition">Condition</label>
+                        <select id="condition">
+                            <option value="">All Conditions</option>
+                            <option value="new">New</option>
+                            <option value="like-new">Like New</option>
+                            <option value="excellent">Excellent</option>
+                            <option value="good">Good</option>
+                            <option value="fair">Fair</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <label for="import-status">Import Status</label>
+                        <select id="import-status">
+                            <option value="">All</option>
+                            <option value="imported">Imported</option>
+                            <option value="local">Local</option>
+                        </select>
+                    </div>
+                    <div class="filter-item">
+                        <button class="apply-filters-button">Apply Filters</button>
+                        <button class="reset-filters-button">Reset Filters</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-</section>
+    </section>
+
     <!-- Cars result section -->
     <section class="cars-section">
         <div class="cars-container">
             <!-- Car card 1 -->
             <div class="car-card">
                 <div class="car-image">
-                    <img img style="height: 100%;width:80%;"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmkrq3o115ydBnIMcCFUEpN692Mr9xuXfHKw&s"
-                        alt="Car"
-                        onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20fill%3D%22%23EEE%22%20width%3D%22300%22%20height%3D%22200%22%2F%3E%3Ctext%20fill%3D%22%23AAA%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2220%22%20text-anchor%3D%22middle%22%20x%3D%22150%22%20y%3D%22105%22%3ECar%20Image%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSmkrq3o115ydBnIMcCFUEpN692Mr9xuXfHKw&s"
+                        alt="Car">
                 </div>
                 <div class="car-details">
                     <div class="car-title">BMW 3 Series 320d</div>
@@ -651,10 +2475,8 @@ header {
             <!-- Car card 2 -->
             <div class="car-card">
                 <div class="car-image">
-                    <img style="height: 100%;width:100%;"
-                        src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXMyScc1v8jhLt1p8-P7g-gA74rekcyH0gcg&s"
-                        alt="Car"
-                        onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20fill%3D%22%23EEE%22%20width%3D%22300%22%20height%3D%22200%22%2F%3E%3Ctext%20fill%3D%22%23AAA%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2220%22%20text-anchor%3D%22middle%22%20x%3D%22150%22%20y%3D%22105%22%3ECar%20Image%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTXMyScc1v8jhLt1p8-P7g-gA74rekcyH0gcg&s"
+                        alt="Car">
                 </div>
                 <div class="car-details">
                     <div class="car-title">Audi A4 2.0 TDI</div>
@@ -666,8 +2488,7 @@ header {
             <!-- Car card 3 -->
             <div class="car-card">
                 <div class="car-image">
-                    <img src="placeholder-car.jpg" alt="Car"
-                        onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20fill%3D%22%23EEE%22%20width%3D%22300%22%20height%3D%22200%22%2F%3E%3Ctext%20fill%3D%22%23AAA%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2220%22%20text-anchor%3D%22middle%22%20x%3D%22150%22%20y%3D%22105%22%3ECar%20Image%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                    <img src="/api/placeholder/300/200" alt="Car">
                 </div>
                 <div class="car-details">
                     <div class="car-title">Mercedes-Benz C-Class C200</div>
@@ -679,709 +2500,907 @@ header {
             <!-- Car card 4 -->
             <div class="car-card">
                 <div class="car-image">
-                    <img src="placeholder-car.jpg" alt="Car"
-                        onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20fill%3D%22%23EEE%22%20width%3D%22300%22%20height%3D%22200%22%2F%3E%3Ctext%20fill%3D%22%23AAA%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2220%22%20text-anchor%3D%22middle%22%20x%3D%22150%22%20y%3D%22105%22%3ECar%20Image%3C%2Ftext%3E%3C%2Fsvg%3E'">
+                    <img src="/api/placeholder/300/200" alt="Car">
                 </div>
-                <div class="car-details">
-                    <div class="car-title">Volkswagen Golf 1.5 TSI</div>
-
-                    <div class="car-specs">2021 • Petrol • 55,000 km • Poznan</div>
-                    <div class="car-price">89,000 PLN</div>
-                </div>
+         div class="car-details">
+            <div class="car-title">Volkswagen Golf 1.5 TSI</div>
+            <div class="car-specs">2021 • Petrol • 56,000 km • Gdansk</div>
+            <div class="car-price">99,500 PLN</div>
+        </div>
+        </div>
+        
+        <!-- Car card 5 -->
+        <div class="car-card">
+            <div class="car-image">
+                <img src="/api/placeholder/300/200" alt="Car">
             </div>
-
-            <!-- Car card 5 -->
-            <div class="car-card">
-                <div class="car-image">
-                    <img src="placeholder-car.jpg" alt="Car"
-                        onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%
-                    200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20fill%3D%22%23EEE%22%20width%3D%22300%22%20height%3D%22200%22%2F%3E%3Ctext%20fill%3D%22%23AAA%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2220%22%20text-anchor%3D%22middle%22%20x%3D%22150%22%20y%3D%22105%22%3ECar%20Image%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                </div>
-                <div class="car-details">
-                    <div class="car-title">Toyota Corolla Hybrid</div>
-                    <div class="car-specs">2022 • Hybrid • 25,000 km • Warsaw</div>
-                    <div class="car-price">108,000 PLN</div>
-                </div>
-            </div>
-
-            <!-- Car card 6 -->
-            <div class="car-card">
-                <div class="car-image">
-                    <img src="placeholder-car.jpg" alt="Car"
-                        onerror="this.src='data:image/svg+xml;charset=UTF-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%22300%22%20height%3D%22200%22%20viewBox%3D%220%200%20300%20200%22%3E%3Crect%20fill%3D%22%23EEE%22%20width%3D%22300%22%20height%3D%22200%22%2F%3E%3Ctext%20fill%3D%22%23AAA%22%20font-family%3D%22Arial%2C%20sans-serif%22%20font-size%3D%2220%22%20text-anchor%3D%22middle%22%20x%3D%22150%22%20y%3D%22105%22%3ECar%20Image%3C%2Ftext%3E%3C%2Fsvg%3E'">
-                </div>
-                <div class="car-details">
-                    <div class="car-title">Volvo XC60 T6</div>
-                    <div class="car-specs">2021 • Petrol • 42,000 km • Gdansk</div>
-                    <div class="car-price">185,000 PLN</div>
-                </div>
+            <div class="car-details">
+                <div class="car-title">Toyota RAV4 Hybrid</div>
+                <div class="car-specs">2022 • Hybrid • 32,000 km • Warsaw</div>
+                <div class="car-price">165,000 PLN</div>
             </div>
         </div>
-    </section>
-
-    <!-- Pagination -->
-    <section class="pagination-section">
-        <div class="pagination-container"
-            style="max-width: 1200px; margin: 20px auto; padding: 0 20px; text-align: center;">
-            <button class="pagination-button"
-                style="background-color: #f0f0f0; border: 1px solid #ddd; padding: 8px 15px; margin: 0 5px; border-radius: 4px; cursor: pointer;">1</button>
-            <button class="pagination-button"
-                style="background-color: white; border: 1px solid #ddd; padding: 8px 15px; margin: 0 5px; border-radius: 4px; cursor: pointer;">2</button>
-            <button class="pagination-button"
-                style="background-color: white; border: 1px solid #ddd; padding: 8px 15px; margin: 0 5px; border-radius: 4px; cursor: pointer;">3</button>
-            <button class="pagination-button"
-                style="background-color: white; border: 1px solid #ddd; padding: 8px 15px; margin: 0 5px; border-radius: 4px; cursor: pointer;">4</button>
-            <button class="pagination-button"
-                style="background-color: white; border: 1px solid #ddd; padding: 8px 15px; margin: 0 5px; border-radius: 4px; cursor: pointer;">5</button>
-            <button class="pagination-button"
-                style="background-color: white; border: 1px solid #ddd; padding: 8px 15px; margin: 0 5px; border-radius: 4px; cursor: pointer;">></button>
+        
+        <!-- Car card 6 -->
+        <div class="car-card">
+            <div class="car-image">
+                <img src="/api/placeholder/300/200" alt="Car">
+            </div>
+            <div class="car-details">
+                <div class="car-title">Volvo XC60 D4</div>
+                <div class="car-specs">2021 • Diesel • 49,000 km • Poznan</div>
+                <div class="car-price">175,000 PLN</div>
+            </div>
         </div>
-    </section>
-
-    <!-- Footer -->
-    <footer style="background-color: #333; color: white; padding: 30px 0; margin-top: 40px;">
-        <div style="max-width: 1200px; margin: 0 auto; padding: 0 20px;">
-            <div style="display: flex; flex-wrap: wrap; justify-content: space-between;">
-                <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
-                    <h3 style="margin-bottom: 15px; font-size: 18px;">About Auto Solo</h3>
-                    <p style="line-height: 1.6; font-size: 14px;">Auto Solo is Poland's leading car marketplace,
-                        connecting buyers and sellers nationwide. We offer a wide range of vehicles with customs
-                        clearance assistance.</p>
+        </div>
+        </section>
+        
+        <!-- Pagination section -->
+        <section class="pagination-section">
+            <div class="pagination-container">
+                <div class="pagination">
+                    <a href="#" class="pagination-link active">1</a>
+                    <a href="#" class="pagination-link">2</a>
+                    <a href="#" class="pagination-link">3</a>
+                    <a href="#" class="pagination-link">4</a>
+                    <a href="#" class="pagination-link">5</a>
+                    <a href="#" class="pagination-link">›</a>
                 </div>
-                <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
-                    <h3 style="margin-bottom: 15px; font-size: 18px;">Quick Links</h3>
-                    <ul style="list-style: none; padding: 0;">
-                        <li style="margin-bottom: 8px;"><a href="#"
-                                style="color: white; text-decoration: none;">Home</a></li>
-                        <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Search
-                                Cars</a></li>
-                        <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Custom
-                                Clearance</a></li>
-                        <li style="margin-bottom: 8px;"><a href="#" style="color: white; text-decoration: none;">Sell
-                                Your Car</a></li>
-                    </ul>
-                </div>
-                <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
-                    <h3 style="margin-bottom: 15px; font-size: 18px;">Contact Us</h3>
-                    <p style="line-height: 1.6; font-size: 14px;">
-                        Email: info@autosolo.pl<br>
-                        Phone: +48 664-689-662<br>
-                        Address: ul. Motorowa 42,<br>
-                        00-001 Warsaw, Poland
-                    </p>
-                </div>
-                <div style="flex: 1; min-width: 200px; margin-bottom: 20px;">
-                    <h3 style="margin-bottom: 15px; font-size: 18px;">Newsletter</h3>
-                    <p style="line-height: 1.6; font-size: 14px;">Subscribe to our newsletter for the latest car
-                        listings and special offers.</p>
-                    <div style="display: flex; margin-top: 10px;">
-                        <input type="email" placeholder="Your email"
-                            style="flex: 1; padding: 8px; border: none; border-radius: 4px 0 0 4px;">
-                        <button
-                            style="background-color: red; color: white; border: none; padding: 8px 15px; border-radius: 0 4px 4px 0; cursor: pointer;">Subscribe</button>
+            </div>
+        </section>
+        
+        <!-- Footer -->
+        <footer>
+            <div class="container">
+                <div class="row">
+                    <div class="column">
+                        <h3>About Auto Solo</h3>
+                        <p>Auto Solo is your trusted marketplace for buying and selling cars in Poland. We provide a secure
+                            platform for dealers and individuals to connect and make deals with confidence.</p>
+                    </div>
+                    <div class="column">
+                        <h3>Quick Links</h3>
+                        <ul>
+                            <li><a href="#">Browse Cars</a></li>
+                            <li><a href="#">Sell Your Car</a></li>
+                            <li><a href="#">Customs Clearance</a></li>
+                            <li><a href="#">Financing Options</a></li>
+                            <li><a href="#">Import Guides</a></li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Support</h3>
+                        <ul>
+                            <li><a href="#">Contact Us</a></li>
+                            <li><a href="#">FAQ</a></li>
+                            <li><a href="#">How It Works</a></li>
+                            <li><a href="#">Privacy Policy</a></li>
+                            <li><a href="#">Terms & Conditions</a></li>
+                        </ul>
+                    </div>
+                    <div class="column">
+                        <h3>Newsletter</h3>
+                        <p>Subscribe to our newsletter for the latest car listings and deals.</p>
+                        <div class="newsletter">
+                            <input type="email" placeholder="Your Email">
+                            <button class="subscribe-btn">Subscribe</button>
+                        </div>
                     </div>
                 </div>
+                <div class="copyright">
+                    <p>&copy; 2025 Auto Solo. All rights reserved.</p>
+                </div>
             </div>
-            <div
-                style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #555; text-align: center; font-size: 14px;">
-                <p>&copy; 2025 Auto Solo. All rights reserved.</p>
-            </div>
-        </div>
-    </footer>
-
-    <script>
-            document.addEventListener('DOMContentLoaded', function() {
-        const advancedFiltersToggle = document.getElementById('advanced-filters-toggle');
-        const advancedFilters = document.getElementById('advanced-filters');
+        </footer>
         
-        advancedFiltersToggle.addEventListener('click', function() {
-            if (advancedFilters.style.display === 'none') {
-                advancedFilters.style.display = 'block';
-                advancedFiltersToggle.textContent = 'Hide Advanced Filters';
-            } else {
-                advancedFilters.style.display = 'none';
-                advancedFiltersToggle.textContent = 'Advanced Filters';
+        <script>
+
+
+            // Define the relationship between brands and models
+                const brandModels = {
+                    'audi': ['A4', 'A6', 'Q5', 'Q7', 'A3', 'A5', 'Q3', 'RS6'],
+                    'bmw': ['3 Series', '5 Series', 'X3', 'X5', 'M3', 'M5', '7 Series', 'X1'],
+                    'mercedes': ['E-Class', 'C-Class', 'GLC', 'S-Class', 'A-Class', 'GLE', 'CLA'],
+                    'volkswagen': ['Golf', 'Passat', 'Tiguan', 'Polo', 'Arteon', 'T-Roc', 'ID.4'],
+                    'toyota': ['Corolla', 'RAV4', 'Camry', 'Yaris', 'C-HR', 'Prius', 'Land Cruiser'],
+                    'volvo': ['XC60', 'XC90', 'V60', 'S60', 'XC40', 'V90', 'S90']
+                };
+
+                // Define popular models for each brand
+                const popularModels = {
+                    'audi': ['A4', 'Q5', 'A3'],
+                    'bmw': ['3 Series', 'X3', 'X5'],
+                    'mercedes': ['E-Class', 'C-Class', 'GLC'],
+                    'volkswagen': ['Golf', 'Tiguan', 'Passat'],
+                    'toyota': ['Corolla', 'RAV4', 'Camry'],
+                    'volvo': ['XC60', 'XC90', 'XC40']
+                };
+
+                // Wait for DOM to be fully loaded
+                document.addEventListener('DOMContentLoaded', function () {
+                    const brandDropdown = document.getElementById('car-brand');
+                    const modelDropdown = document.getElementById('car-model');
+
+                    // Check if elements exist before proceeding
+                    if (!brandDropdown || !modelDropdown) {
+                        console.error('Required dropdown elements not found');
+                        return;
+                    }
+
+                    // Add custom model input field after model dropdown
+                    const modelParent = modelDropdown.parentNode;
+                    const customModelContainer = document.createElement('div');
+                    customModelContainer.className = 'filter-item custom-model-container';
+                    customModelContainer.style.display = 'none';
+                    customModelContainer.innerHTML = `
+        <label for="custom-model">Enter Your Model</label>
+        <input type="text" id="custom-model" placeholder="Type your model...">
+    `;
+                    modelParent.parentNode.insertBefore(customModelContainer, modelParent.nextSibling);
+
+                    // Add "Popular Models" option to model dropdown
+                    const popularOption = document.createElement('option');
+                    popularOption.value = "popular";
+                    popularOption.textContent = "Popular Models";
+                    modelDropdown.insertBefore(popularOption, modelDropdown.firstChild.nextSibling);
+
+                    // Add "Other/Custom" option to model dropdown
+                    const customOption = document.createElement('option');
+                    customOption.value = "custom";
+                    customOption.textContent = "Other/Custom";
+                    modelDropdown.appendChild(customOption);
+
+                    // Update models based on selected brand
+                    brandDropdown.addEventListener('change', updateModels);
+
+                    // Handle custom model selection
+                    modelDropdown.addEventListener('change', function () {
+                        if (this.value === 'custom') {
+                            customModelContainer.style.display = 'block';
+                        } else {
+                            customModelContainer.style.display = 'none';
+                        }
+
+                        // Handle popular models selection
+                        if (this.value === 'popular') {
+                            const selectedBrand = brandDropdown.value;
+                            if (selectedBrand && popularModels[selectedBrand]) {
+                                // Show a popup or highlighting popular models
+                                showPopularModels(selectedBrand);
+                            }
+                        }
+                    });
+
+                    // Initial update of models
+                    updateModels();
+                    document.getElementById("upl").onclick = function upl(){
+                        window.open('upload.html')
+                    }
+                    function updateModels() {
+                        const selectedBrand = brandDropdown.value;
+
+                        // Clear existing model options except the first one (All Models)
+                        while (modelDropdown.options.length > 1) {
+                            modelDropdown.remove(1);
+                        }
+
+                        // Re-add the "Popular Models" option
+                        modelDropdown.appendChild(popularOption);
+
+                        // Add models specific to the selected brand
+                        if (selectedBrand && brandModels[selectedBrand]) {
+                            brandModels[selectedBrand].forEach(model => {
+                                const option = document.createElement('option');
+                                option.value = model.toLowerCase().replace(/\s+/g, '-');
+                                option.textContent = model;
+                                modelDropdown.appendChild(option);
+                            });
+                        } else {
+                            // If "All Brands" or unknown brand is selected, add all models
+                            Object.values(brandModels).flat().forEach(model => {
+                                // Check if model already exists in dropdown
+                                if (![...modelDropdown.options].some(opt => opt.textContent === model)) {
+                                    const option = document.createElement('option');
+                                    option.value = model.toLowerCase().replace(/\s+/g, '-');
+                                    option.textContent = model;
+                                    modelDropdown.appendChild(option);
+                                }
+                            });
+                        }
+
+                        // Always add the custom option at the end
+                        modelDropdown.appendChild(customOption);
+                    }
+
+                    function showPopularModels(brand) {
+                        // Create a popup to show popular models
+                        const popup = document.createElement('div');
+                        popup.className = 'popular-models-popup';
+                        popup.innerHTML = `
+            <div class="popup-content">
+                <h3>Popular ${brand.charAt(0).toUpperCase() + brand.slice(1)} Models</h3>
+                <ul>
+                    ${popularModels[brand].map(model => `<li>${model}</li>`).join('')}
+                </ul>
+                <button id="close-popup">Close</button>
+            </div>
+        `;
+
+                        // Add styles for the popup
+                        const style = document.createElement('style');
+                        style.textContent = `
+            .popular-models-popup {
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100%;
+                height: 100%;
+                background-color: rgba(0,0,0,0.5);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                z-index: 1000;
             }
+            .popup-content {
+                background-color: white;
+                padding: 20px;
+                border-radius: 5px;
+                max-width: 400px;
+                width: 80%;
+            }
+            .popup-content h3 {
+                margin-top: 0;
+                color: #333;
+            }
+            .popup-content ul {
+                padding-left: 20px;
+            }
+            .popup-content button {
+                background-color: #4CAF50;
+                color: white;
+                border: none;
+                padding: 8px 16px;
+                border-radius: 4px;
+                cursor: pointer;
+                margin-top: 10px;
+            }
+        `;
+
+                        document.head.appendChild(style);
+                        document.body.appendChild(popup);
+
+                        // Add close functionality
+                        document.getElementById('close-popup').addEventListener('click', function () {
+                            document.body.removeChild(popup);
+                            // Reset selection to first option
+                            modelDropdown.selectedIndex = 0;
+                        });
+                    }
+                });
+            document.addEventListener('DOMContentLoaded', function() {
+    // Initialize currency selectors
+    initCurrencySelector('min-currency-selector');
+    initCurrencySelector('max-currency-selector');
+    
+    function initCurrencySelector(selectorId) {
+        const selector = document.getElementById(selectorId);
+        const selectedCurrency = selector.querySelector('.selected-currency');
+        const dropdown = selector.querySelector('.currency-dropdown');
+        const options = selector.querySelectorAll('.currency-option');
+        
+        // Toggle dropdown on click
+        selector.addEventListener('click', function(e) {
+            e.stopPropagation();
+            selector.classList.toggle('active');
+        });
+        
+        // Select currency when clicking an option
+        options.forEach(option => {
+            // Mark the default selected option
+            if (option.dataset.currency === selectedCurrency.textContent) {
+                option.classList.add('selected');
+            }
+            
+            option.addEventListener('click', function(e) {
+                e.stopPropagation();
+                
+                // Update selected currency
+                const currency = this.dataset.currency;
+                selectedCurrency.textContent = currency;
+                
+                // Update selected class
+                options.forEach(opt => opt.classList.remove('selected'));
+                this.classList.add('selected');
+                
+                // Close dropdown
+                selector.classList.remove('active');
+                
+                // Update form values or perform other actions
+                updateCurrencyForPriceField(selectorId, currency);
+            });
+        });
+    }
+    
+    // Close all dropdowns when clicking outside
+    document.addEventListener('click', function() {
+        const activeSelectors = document.querySelectorAll('.currency-selector.active');
+        activeSelectors.forEach(selector => {
+            selector.classList.remove('active');
         });
     });
-        // Search functionality
+    
+    // Function to handle currency changes
+    function updateCurrencyForPriceField(selectorId, currency) {
+        // Get associated input field
+        const inputField = selectorId === 'min-currency-selector' ? 
+                          document.getElementById('price-min') : 
+                          document.getElementById('price-max');
+        
+        // You might want to convert values based on exchange rates here
+        console.log(`Changed ${selectorId} to ${currency}`);
+        
+        // Example of how you might adjust the input value based on currency
+        // This is just a placeholder - you would need real exchange rates
+        const exchangeRates = {
+            PLN: 1,
+            USD: 3.8, // Example rate: 1 USD = 3.8 PLN
+            EUR: 4.2  // Example rate: 1 EUR = 4.2 PLN
+        };
+        
+        // If there's a value in the input field, you might want to convert it
+        if (inputField.value) {
+            // This is just an example of how conversion might work
+            // In a real application, you'd need proper handling of exchange rates
+            // const currentValuePLN = parseFloat(inputField.value) * exchangeRates[previousCurrency];
+            // const newValue = currentValuePLN / exchangeRates[currency];
+            // inputField.value = Math.round(newValue * 100) / 100;
+        }
+    }
+});
+            document.addEventListener('DOMContentLoaded', function() {
+    // Get the search button element
+    const searchButton = document.getElementById('myImg');
+    
+    // Add click event listener to the search button
+    searchButton.addEventListener('click', function() {
+        // Show a search input field or toggle search bar visibility
+        toggleSearchBar();
+    });
+    
+    function toggleSearchBar() {
+        // Check if search bar already exists
+        let searchBar = document.getElementById('searchBar');
+        
+        if (searchBar) {
+            // If search bar exists, toggle its visibility
+            searchBar.style.display = searchBar.style.display === 'none' ? 'block' : 'none';
+        } else {
+            // Create search bar if it doesn't exist
+            searchBar = document.createElement('div');
+            searchBar.id = 'searchBar';
+            searchBar.className = 'search-container';
+            
+            // Create input field
+            const searchInput = document.createElement('input');
+            searchInput.type = 'text';
+            searchInput.placeholder = 'Search...';
+            searchInput.className = 'search-input';
+            
+            // Create search submit button
+            const submitButton = document.createElement('button');
+            submitButton.textContent = 'Search';
+            submitButton.className = 'search-submit';
+            submitButton.addEventListener('click', function() {
+                performSearch(searchInput.value);
+            });
+            
+            // Add elements to search bar
+            searchBar.appendChild(searchInput);
+            searchBar.appendChild(submitButton);
+            
+            // Add event listener for Enter key
+            searchInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    performSearch(searchInput.value);
+                }
+            });
+            
+            // Insert search bar into the document
+            const iconControls = document.querySelector('.icon-controls');
+            iconControls.parentNode.insertBefore(searchBar, iconControls.nextSibling);
+        }
+    }
+    
+    function performSearch(query) {
+        if (query.trim() === '') {
+            alert('Please enter a search term');
+            return;
+        }
+        
+        console.log('Searching for:', query);
+        // Replace this with your actual search implementation
+        // Example:
+        // window.location.href = '/search?q=' + encodeURIComponent(query);
+        
+        // For now, just alert the search query
+        alert('You searched for: ' + query);
+    }
+});
+            document.getElementById("upl").onclick = function open(){
+                window.open('upload.html')
+            }
+            // Toggle menu visibility when clicking on menu icon
+            document.getElementById('manu').addEventListener('click', function () {
+                document.getElementById('menu-container').classList.toggle('active');
+            });
+
+            // Toggle advanced filters visibility
+            document.getElementById('advanced-filters-toggle').addEventListener('click', function () {
+                const advancedFilters = document.getElementById('advanced-filters');
+                if (advancedFilters.style.display === 'none') {
+                    advancedFilters.style.display = 'block';
+                    this.textContent = 'Hide Advanced Filters';
+                } else {
+                    advancedFilters.style.display = 'none';
+                    this.textContent = 'Advanced Filters';
+                }
+            });
+
+            // Reset filters functionality
+            document.querySelector('.reset-filters-button').addEventListener('click', function () {
+                const selects = document.querySelectorAll('select');
+                const inputs = document.querySelectorAll('input[type="number"]');
+                const checkboxes = document.querySelectorAll('input[type="checkbox"]');
+
+                selects.forEach(select => {
+                    select.selectedIndex = 0;
+                });
+
+                inputs.forEach(input => {
+                    input.value = '';
+                });
+
+                checkboxes.forEach(checkbox => {
+                    checkbox.checked = false;
+                });
+            });
+
+            // Mock search functionality
+            document.querySelector('.search-button').addEventListener('click', function () {
+                alert('Search functionality would be implemented here with actual backend integration.');
+            });
+
+            // Mock apply filters functionality
+            document.querySelector('.apply-filters-button').addEventListener('click', function () {
+                alert('Applying filters - this would filter the results based on selected criteria in a real implementation.');
+            });
+
+            // Car card click event
+            const carCards = document.querySelectorAll('.car-card');
+            carCards.forEach(card => {
+                card.addEventListener('click', function () {
+                    const carTitle = this.querySelector('.car-title').textContent;
+                    alert(`You clicked on ${carTitle}. In a real implementation, this would navigate to the car details page.`);
+                });
+            });
+
+// Complete implementation for custom Google Translate with all supported languages
+
+// HTML Structure
+const translateHTML = `
+<div id="custom-google-translate">
+    <div class="translate-button">
+        <span class="translate-icon">🌐</span>
+        <span class="translate-text">Translate</span>
+    </div>
+    <div class="language-dropdown">
+        <!-- Languages will be populated here by JavaScript -->
+    </div>
+</div>
+
+<div id="google_translate_element" style="display: none;"></div>
+`;
+
+// Add the HTML to the page
 document.addEventListener('DOMContentLoaded', function() {
-    // Search bar functionality
-    const searchIcon = document.getElementById('myImg');
+    // Find a good place to insert the translator or create a container for it
+    const container = document.createElement('div');
+    container.innerHTML = translateHTML;
+    document.body.insertBefore(container, document.body.firstChild);
     
-    // Create search overlay elements
-    const searchOverlay = document.createElement('div');
-    searchOverlay.className = 'search-overlay';
-    searchOverlay.style.position = 'fixed';
-    searchOverlay.style.top = '0';
-    searchOverlay.style.left = '0';
-    searchOverlay.style.width = '100%';
-    searchOverlay.style.height = '100%';
-    searchOverlay.style.backgroundColor = 'rgba(0, 0, 0, 0.8)';
-    searchOverlay.style.zIndex = '1000';
-    searchOverlay.style.display = 'none';
-    searchOverlay.style.justifyContent = 'center';
-    searchOverlay.style.alignItems = 'center';
-    searchOverlay.style.transition = 'opacity 0.3s ease';
+    // Add the CSS
+    const style = document.createElement('style');
+    style.textContent = `
+    /* Custom Google Translate Styling */
+    #custom-google-translate {
+        position: relative;
+        font-family: 'Arial', sans-serif;
+        margin: 10px 0;
+        width: 200px;
+        z-index: 9999;
+    }
+
+    .translate-button {
+        display: flex;
+        align-items: center;
+        padding: 8px 12px;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        cursor: pointer;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
+        transition: all 0.2s;
+    }
+
+    .translate-button:hover {
+        background-color: #f8f8f8;
+        border-color: #ccc;
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    }
+
+    .translate-icon {
+        margin-right: 8px;
+        font-size: 16px;
+    }
+
+    .translate-text {
+        font-size: 14px;
+        color: #333;
+    }
+
+    .language-dropdown {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        width: 100%;
+        max-height: 300px;
+        overflow-y: auto;
+        background-color: #fff;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        margin-top: 4px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        display: none;
+        z-index: 10000;
+    }
+
+    .language-dropdown.show {
+        display: block;
+    }
+
+    .language-option {
+        padding: 8px 12px;
+        cursor: pointer;
+        transition: background-color 0.2s;
+        font-size: 14px;
+        color: #333;
+    }
+
+    .language-option:hover {
+        background-color: #f0f5ff;
+    }
+
+    .language-option.selected {
+        background-color: #e8f0fd;
+        font-weight: 500;
+    }
+
+    /* Scrollbar styling */
+    .language-dropdown::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    .language-dropdown::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    .language-dropdown::-webkit-scrollbar-thumb {
+        background: #c1c1c1;
+        border-radius: 4px;
+    }
+
+    .language-dropdown::-webkit-scrollbar-thumb:hover {
+        background: #a8a8a8;
+    }`;
+    document.head.appendChild(style);
+});
+
+// Wait for Google Translate to load
+function googleTranslateElementInit() {
+    new google.translate.TranslateElement({
+        pageLanguage: 'en',
+        autoDisplay: false, // Don't auto-display the widget
+        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+    }, 'google_translate_element');
     
+    // Initialize our custom dropdown after Google Translate loads
+    setTimeout(initCustomTranslate, 1000);
+}
+
+function initCustomTranslate() {
+    // Complete list of all languages supported by Google Translate
+    const languages = [
+        {code: 'af', name: 'Afrikaans'},
+        {code: 'sq', name: 'Albanian'},
+        {code: 'am', name: 'Amharic'},
+        {code: 'ar', name: 'Arabic'},
+        {code: 'hy', name: 'Armenian'},
+        {code: 'as', name: 'Assamese'},
+        {code: 'ay', name: 'Aymara'},
+        {code: 'az', name: 'Azerbaijani'},
+        {code: 'bm', name: 'Bambara'},
+        {code: 'eu', name: 'Basque'},
+        {code: 'be', name: 'Belarusian'},
+        {code: 'bn', name: 'Bengali'},
+        {code: 'bho', name: 'Bhojpuri'},
+        {code: 'bs', name: 'Bosnian'},
+        {code: 'bg', name: 'Bulgarian'},
+        {code: 'ca', name: 'Catalan'},
+        {code: 'ceb', name: 'Cebuano'},
+        {code: 'ny', name: 'Chichewa'},
+        {code: 'zh-CN', name: 'Chinese (Simplified)'},
+        {code: 'zh-TW', name: 'Chinese (Traditional)'},
+        {code: 'co', name: 'Corsican'},
+        {code: 'hr', name: 'Croatian'},
+        {code: 'cs', name: 'Czech'},
+        {code: 'da', name: 'Danish'},
+        {code: 'dv', name: 'Dhivehi'},
+        {code: 'doi', name: 'Dogri'},
+        {code: 'nl', name: 'Dutch'},
+        {code: 'en', name: 'English'},
+        {code: 'eo', name: 'Esperanto'},
+        {code: 'et', name: 'Estonian'},
+        {code: 'ee', name: 'Ewe'},
+        {code: 'tl', name: 'Filipino'},
+        {code: 'fi', name: 'Finnish'},
+        {code: 'fr', name: 'French'},
+        {code: 'fy', name: 'Frisian'},
+        {code: 'gl', name: 'Galician'},
+        {code: 'ka', name: 'Georgian'},
+        {code: 'de', name: 'German'},
+        {code: 'el', name: 'Greek'},
+        {code: 'gn', name: 'Guarani'},
+        {code: 'gu', name: 'Gujarati'},
+        {code: 'ht', name: 'Haitian Creole'},
+        {code: 'ha', name: 'Hausa'},
+        {code: 'haw', name: 'Hawaiian'},
+        {code: 'iw', name: 'Hebrew'},
+        {code: 'hi', name: 'Hindi'},
+        {code: 'hmn', name: 'Hmong'},
+        {code: 'hu', name: 'Hungarian'},
+        {code: 'is', name: 'Icelandic'},
+        {code: 'ig', name: 'Igbo'},
+        {code: 'ilo', name: 'Ilocano'},
+        {code: 'id', name: 'Indonesian'},
+        {code: 'ga', name: 'Irish'},
+        {code: 'it', name: 'Italian'},
+        {code: 'ja', name: 'Japanese'},
+        {code: 'jw', name: 'Javanese'},
+        {code: 'kn', name: 'Kannada'},
+        {code: 'kk', name: 'Kazakh'},
+        {code: 'km', name: 'Khmer'},
+        {code: 'rw', name: 'Kinyarwanda'},
+        {code: 'gom', name: 'Konkani'},
+        {code: 'ko', name: 'Korean'},
+        {code: 'kri', name: 'Krio'},
+        {code: 'ku', name: 'Kurdish (Kurmanji)'},
+        {code: 'ckb', name: 'Kurdish (Sorani)'},
+        {code: 'ky', name: 'Kyrgyz'},
+        {code: 'lo', name: 'Lao'},
+        {code: 'la', name: 'Latin'},
+        {code: 'lv', name: 'Latvian'},
+        {code: 'ln', name: 'Lingala'},
+        {code: 'lt', name: 'Lithuanian'},
+        {code: 'lg', name: 'Luganda'},
+        {code: 'lb', name: 'Luxembourgish'},
+        {code: 'mk', name: 'Macedonian'},
+        {code: 'mai', name: 'Maithili'},
+        {code: 'mg', name: 'Malagasy'},
+        {code: 'ms', name: 'Malay'},
+        {code: 'ml', name: 'Malayalam'},
+        {code: 'mt', name: 'Maltese'},
+        {code: 'mi', name: 'Maori'},
+        {code: 'mr', name: 'Marathi'},
+        {code: 'mni-Mtei', name: 'Meiteilon (Manipuri)'},
+        {code: 'lus', name: 'Mizo'},
+        {code: 'mn', name: 'Mongolian'},
+        {code: 'my', name: 'Myanmar (Burmese)'},
+        {code: 'ne', name: 'Nepali'},
+        {code: 'no', name: 'Norwegian'},
+        {code: 'or', name: 'Odia (Oriya)'},
+        {code: 'om', name: 'Oromo'},
+        {code: 'ps', name: 'Pashto'},
+        {code: 'fa', name: 'Persian'},
+        {code: 'pl', name: 'Polish'},
+        {code: 'pt', name: 'Portuguese'},
+        {code: 'pa', name: 'Punjabi'},
+        {code: 'qu', name: 'Quechua'},
+        {code: 'ro', name: 'Romanian'},
+        {code: 'ru', name: 'Russian'},
+        {code: 'sm', name: 'Samoan'},
+        {code: 'sa', name: 'Sanskrit'},
+        {code: 'gd', name: 'Scots Gaelic'},
+        {code: 'nso', name: 'Sepedi'},
+        {code: 'sr', name: 'Serbian'},
+        {code: 'st', name: 'Sesotho'},
+        {code: 'sn', name: 'Shona'},
+        {code: 'sd', name: 'Sindhi'},
+        {code: 'si', name: 'Sinhala'},
+        {code: 'sk', name: 'Slovak'},
+        {code: 'sl', name: 'Slovenian'},
+        {code: 'so', name: 'Somali'},
+        {code: 'es', name: 'Spanish'},
+        {code: 'su', name: 'Sundanese'},
+        {code: 'sw', name: 'Swahili'},
+        {code: 'sv', name: 'Swedish'},
+        {code: 'tg', name: 'Tajik'},
+        {code: 'ta', name: 'Tamil'},
+        {code: 'tt', name: 'Tatar'},
+        {code: 'te', name: 'Telugu'},
+        {code: 'th', name: 'Thai'},
+        {code: 'ti', name: 'Tigrinya'},
+        {code: 'ts', name: 'Tsonga'},
+        {code: 'tr', name: 'Turkish'},
+        {code: 'tk', name: 'Turkmen'},
+        {code: 'ak', name: 'Twi'},
+        {code: 'uk', name: 'Ukrainian'},
+        {code: 'ur', name: 'Urdu'},
+        {code: 'ug', name: 'Uyghur'},
+        {code: 'uz', name: 'Uzbek'},
+        {code: 'vi', name: 'Vietnamese'},
+        {code: 'cy', name: 'Welsh'},
+        {code: 'xh', name: 'Xhosa'},
+        {code: 'yi', name: 'Yiddish'},
+        {code: 'yo', name: 'Yoruba'},
+        {code: 'zu', name: 'Zulu'}
+    ];
+    
+    const dropdown = document.querySelector('.language-dropdown');
+    const translateButton = document.querySelector('.translate-button');
+    
+    // Sort languages alphabetically
+    languages.sort((a, b) => a.name.localeCompare(b.name));
+    
+    // Add "Original Language" option at the top
+    const originalOption = document.createElement('div');
+    originalOption.className = 'language-option selected';
+    originalOption.setAttribute('data-lang', '');
+    originalOption.textContent = 'Original Language';
+    dropdown.appendChild(originalOption);
+    
+    // Add separator
+    const separator = document.createElement('div');
+    separator.style.borderBottom = '1px solid #ddd';
+    separator.style.margin = '4px 0';
+    dropdown.appendChild(separator);
+    
+    // Populate the dropdown with all languages
+    languages.forEach(lang => {
+        const option = document.createElement('div');
+        option.className = 'language-option';
+        option.setAttribute('data-lang', lang.code);
+        option.textContent = lang.name;
+        dropdown.appendChild(option);
+        
+        // Set click handler for each language option
+        option.addEventListener('click', function() {
+            const langCode = this.getAttribute('data-lang');
+            
+            // If Original Language is selected, trigger page reset
+            if (langCode === '') {
+                // Find the Google Translate reset button and click it
+                const resetElement = document.querySelector('.goog-te-banner-frame')?.contentWindow?.document.querySelector('.goog-close-link') || 
+                                    document.querySelector('.VIpgJd-ZVi9od-aZ2wEe-wOHMyf .VIpgJd-ZVi9od-aZ2wEe-wOHMyf-xgov5');
+                
+                if (resetElement) {
+                    resetElement.click();
+                } else {
+                    // Alternative reset method
+                    const iframe = document.querySelector('.goog-te-menu-frame');
+                    if (iframe) {
+                        const innerDoc = iframe.contentDocument || iframe.contentWindow.document;
+                        const resetLink = innerDoc.querySelector('a[id*=":0.targetLanguage"]');
+                        if (resetLink) resetLink.click();
+                    }
+                    
+                    // Reset using cookies as a last resort
+                    document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+                    document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=' + location.hostname + ';';
+                    document.cookie = 'googtrans=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/; domain=.' + location.hostname + ';';
+                    location.reload();
+                }
+            } else {
+                // Translate to selected language
+                translatePage(langCode);
+            }
+            
+            // Update selected language in the dropdown
+            document.querySelectorAll('.language-option').forEach(el => {
+                el.classList.remove('selected');
+            });
+            this.classList.add('selected');
+            
+            // Update button text to show selected language
+            document.querySelector('.translate-text').textContent = langCode === '' ? 'Translate' : this.textContent;
+            
+            // Hide dropdown
+            dropdown.classList.remove('show');
+        });
+    });
+    
+    // Toggle dropdown visibility when button is clicked
+    translateButton.addEventListener('click', function() {
+        dropdown.classList.toggle('show');
+    });
+    
+    // Close dropdown when clicking outside
+    document.addEventListener('click', function(e) {
+        if (!e.target.closest('#custom-google-translate')) {
+            dropdown.classList.remove('show');
+        }
+    });
+    
+    // Add search functionality for languages
     const searchContainer = document.createElement('div');
     searchContainer.className = 'search-container';
-    searchContainer.style.width = '80%';
-    searchContainer.style.maxWidth = '600px';
-    searchContainer.style.position = 'relative';
-    
-    const closeButton = document.createElement('button');
-    closeButton.className = 'close-search';
-    closeButton.innerHTML = '&times;';
-    closeButton.style.position = 'absolute';
-    closeButton.style.top = '-40px';
-    closeButton.style.right = '0';
-    closeButton.style.background = 'none';
-    closeButton.style.border = 'none';
-    closeButton.style.color = 'white';
-    closeButton.style.fontSize = '30px';
-    closeButton.style.cursor = 'pointer';
+    searchContainer.style.padding = '8px';
+    searchContainer.style.position = 'sticky';
+    searchContainer.style.top = '0';
+    searchContainer.style.backgroundColor = '#fff';
+    searchContainer.style.borderBottom = '1px solid #ddd';
+    searchContainer.style.zIndex = '1';
     
     const searchInput = document.createElement('input');
     searchInput.type = 'text';
-    searchInput.placeholder = 'Search for cars, brands, models...';
+    searchInput.placeholder = 'Search languages...';
     searchInput.style.width = '100%';
-    searchInput.style.padding = '15px';
-    searchInput.style.fontSize = '18px';
-    searchInput.style.border = 'none';
+    searchInput.style.padding = '6px';
+    searchInput.style.border = '1px solid #ddd';
     searchInput.style.borderRadius = '4px';
-    searchInput.style.outline = 'none';
+    searchInput.style.fontSize = '13px';
     
-    // Assemble the search components
-    searchContainer.appendChild(closeButton);
+    // Add search functionality
+    searchInput.addEventListener('input', function() {
+        const searchTerm = this.value.toLowerCase();
+        document.querySelectorAll('.language-option').forEach(option => {
+            const langName = option.textContent.toLowerCase();
+            // Always show "Original Language" option
+            if (option.getAttribute('data-lang') === '') {
+                option.style.display = 'block';
+            } else {
+                option.style.display = langName.includes(searchTerm) ? 'block' : 'none';
+            }
+        });
+        // Always show separator
+        separator.style.display = searchTerm ? 'none' : 'block';
+    });
+    
     searchContainer.appendChild(searchInput);
-    searchOverlay.appendChild(searchContainer);
-    document.body.appendChild(searchOverlay);
+    dropdown.insertBefore(searchContainer, dropdown.firstChild);
+}
+
+// Function to trigger Google Translate
+function translatePage(langCode) {
+    // Get the actual Google Translate select element
+    const googleCombo = document.querySelector('.goog-te-combo');
     
-    // Search icon click event - show search overlay
-    searchIcon.addEventListener('click', function() {
-        searchOverlay.style.display = 'flex';
-        searchOverlay.style.opacity = '0';
-        setTimeout(() => {
-            searchOverlay.style.opacity = '1';
-            searchInput.focus();
-        }, 10);
-    });
-    
-    // Close button click event
-    closeButton.addEventListener('click', function() {
-        searchOverlay.style.opacity = '0';
-        setTimeout(() => {
-            searchOverlay.style.display = 'none';
-            searchInput.value = '';
-        }, 300);
-    });
-    
-    // Close search overlay when clicking outside the search container
-    searchOverlay.addEventListener('click', function(e) {
-        if (e.target === searchOverlay) {
-            closeButton.click();
-        }
-    });
-    
-    // Search functionality
-    searchInput.addEventListener('keypress', function(e) {
-        if (e.key === 'Enter') {
-            const searchTerm = searchInput.value.trim().toLowerCase();
-            if (searchTerm) {
-                // Perform search
-                performSearch(searchTerm);
-                closeButton.click();
-            }
-        }
-    });
-    
-    // Function to perform search
-    function performSearch(term) {
-        // Reset visible count
-        let visibleCount = 0;
+    if (googleCombo) {
+        // Change the value and trigger the change event
+        googleCombo.value = langCode;
         
-        // Get all car cards
-        const carCards = document.querySelectorAll('.car-card');
+        // Create and dispatch change event
+        const event = new Event('change', { bubbles: true });
+        googleCombo.dispatchEvent(event);
+    } else {
+        console.error('Google Translate widget not found');
         
-        carCards.forEach(card => {
-            const cardTitle = card.querySelector('.car-title').textContent.toLowerCase();
-            const cardSpecs = card.querySelector('.car-specs').textContent.toLowerCase();
-            
-            // Check if the term is in the title or specs
-            if (cardTitle.includes(term) || cardSpecs.includes(term)) {
-                card.style.display = 'block';
-                visibleCount++;
-                
-                // Highlight the matching term
-                highlightText(card, term);
-            } else {
-                card.style.display = 'none';
-            }
-        });
-        
-        // Update results count or create if it doesn't exist
-        let resultsCount = document.getElementById('results-count');
-        if (!resultsCount) {
-            resultsCount = document.createElement('div');
-            resultsCount.id = 'results-count';
-            resultsCount.style.margin = '20px auto 0';
-            resultsCount.style.padding = '0 20px';
-            resultsCount.style.maxWidth = '1200px';
-            resultsCount.style.fontWeight = 'bold';
-            
-            const carsSection = document.querySelector('.cars-section');
-            carsSection.insertBefore(resultsCount, carsSection.firstChild);
-        }
-        
-        resultsCount.textContent = `Found ${visibleCount} cars matching "${term}"`;
-        resultsCount.scrollIntoView({ behavior: 'smooth' });
+        // Alternative method: use cookies directly
+        document.cookie = `googtrans=/auto/${langCode}`;
+        location.reload();
     }
-    
-    // Function to highlight search terms
-    function highlightText(card, term) {
-        const title = card.querySelector('.car-title');
-        const specs = card.querySelector('.car-specs');
+}
+        </script>
+         <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+        </body>
         
-        // Store original content to restore when search is cleared
-        if (!title.dataset.original) {
-            title.dataset.original = title.textContent;
-            specs.dataset.original = specs.textContent;
-        }
-        
-        // Highlight in title
-        title.innerHTML = title.dataset.original.replace(
-            new RegExp(term, 'gi'),
-            match => `<span style="background-color: yellow; color: black;">${match}</span>`
-        );
-        
-        // Highlight in specs
-        specs.innerHTML = specs.dataset.original.replace(
-            new RegExp(term, 'gi'),
-            match => `<span style="background-color: yellow; color: black;">${match}</span>`
-        );
-    }
-});
-
-// Enhanced Menu Functionality
-document.addEventListener('DOMContentLoaded', function() {
-    const menuButton = document.getElementById('manu');
-    const menuContainer = document.getElementById('menu-container');
-    
-    // Enhanced menu toggle with animation
-    menuButton.addEventListener('click', function(e) {
-        e.stopPropagation(); // Prevent document click from immediately closing the menu
-        
-        if (menuContainer.classList.contains('visible')) {
-            // Close menu with animation
-            menuContainer.style.opacity = '0';
-            menuContainer.style.transform = 'translateY(-10px)';
-            setTimeout(() => {
-                menuContainer.classList.remove('visible');
-                // Reset styles after animation
-                menuContainer.style.opacity = '';
-                menuContainer.style.transform = '';
-            }, 200);
-        } else {
-            // Setup for animation
-            menuContainer.style.opacity = '0';
-            menuContainer.style.transform = 'translateY(-10px)';
-            menuContainer.classList.add('visible');
-            
-            // Start animation after a small delay to ensure the display change has taken effect
-            setTimeout(() => {
-                menuContainer.style.opacity = '1';
-                menuContainer.style.transform = 'translateY(0)';
-                menuContainer.style.transition = 'opacity 0.2s ease, transform 0.2s ease';
-            }, 10);
-        }
-    });
-    
-    // Add event listeners to menu items
-    const menuItems = menuContainer.querySelectorAll('li a');
-    menuItems.forEach(item => {
-        // Add hover effect
-        item.addEventListener('mouseenter', function() {
-            this.style.transition = 'color 0.2s ease';
-            this.style.color = '#007bff';
-        });
-        
-        item.addEventListener('mouseleave', function() {
-            this.style.transition = 'color 0.2s ease';
-            this.style.color = '';
-        });
-        
-        // Add click effect
-        item.addEventListener('click', function() {
-            // Close menu when an item is clicked
-            menuContainer.classList.remove('visible');
-            
-            // Handle specific menu items
-            const menuText = this.textContent.toLowerCase();
-            
-            if (menuText.includes('custom clearance')) {
-                // Scroll to the custom clearance section
-                document.querySelector('.clearance-help').scrollIntoView({ behavior: 'smooth' });
-            } else if (menuText.includes('about us')) {
-                // Could implement a modal or scroll to about section
-                alert('About Us information coming soon!');
-            } else if (menuText.includes('faq')) {
-                alert('FAQ section coming soon!');
-            }
-        });
-    });
-    
-    // Close menu when clicking outside
-    document.addEventListener('click', function(event) {
-        if (menuContainer.classList.contains('visible') && 
-            !menuContainer.contains(event.target) && 
-            event.target !== menuButton) {
-            
-            menuContainer.style.opacity = '0';
-            menuContainer.style.transform = 'translateY(-10px)';
-            setTimeout(() => {
-                menuContainer.classList.remove('visible');
-                // Reset styles after animation
-                menuContainer.style.opacity = '';
-                menuContainer.style.transform = '';
-            }, 200);
-        }
-    });
-    
-    // Add CSS for smooth animation
-    const style = document.createElement('style');
-    style.textContent = `
-        #menu-container {
-            transition: opacity 0.2s ease, transform 0.2s ease;
-        }
-        
-        #menu-container ul li a {
-            position: relative;
-        }
-        
-        #menu-container ul li a::after {
-            content: '';
-            position: absolute;
-            width: 0;
-            height: 2px;
-            bottom: -2px;
-            left: 0;
-            background-color: #007bff;
-            transition: width 0.3s;
-        }
-        
-        #menu-container ul li a:hover::after {
-            width: 100%;
-        }
-    `;
-    document.head.appendChild(style);
-});
-        // Update the search button event listener
-        document.querySelector('.upload-button').addEventListener('click', function() {
-    window.open('upload.html');
-});
-        document.querySelector('.search-button').addEventListener('click', function () {
-            // Get filter values
-            const brand = document.getElementById('car-brand').value;
-            const model = document.getElementById('car-model').value;
-            const location = document.getElementById('location').value;
-            const customs = document.getElementById('customs-clearance').value;
-            const fuelType = document.getElementById('fuel-type').value;
-            const year = document.getElementById('year').value;
-            const minPrice = document.getElementById('price-min').value;
-            const maxPrice = document.getElementById('price-max').value;
-
-            // Create a filter summary
-            let filterSummary = 'Filters applied: ';
-            let filterCount = 0;
-
-            if (brand) {
-                filterSummary += `Brand: ${brand}, `;
-                filterCount++;
-            }
-            if (model) {
-                filterSummary += `Model: ${model}, `;
-                filterCount++;
-            }
-            if (location) {
-                filterSummary += `Location: ${location}, `;
-                filterCount++;
-            }
-            if (customs) {
-                filterSummary += `Customs: ${customs === 'with' ? 'With Clearance' : 'Without Clearance'}, `;
-                filterCount++;
-            }
-            if (fuelType) {
-                filterSummary += `Fuel: ${fuelType}, `;
-                filterCount++;
-            }
-            if (year) {
-                filterSummary += `Year: ${year}, `;
-                filterCount++;
-            }
-            if (minPrice) {
-                filterSummary += `Min Price: ${minPrice} PLN, `;
-                filterCount++;
-            }
-            if (maxPrice) {
-                filterSummary += `Max Price: ${maxPrice} PLN, `;
-                filterCount++;
-            }
-
-            // Remove trailing comma and space
-            if (filterCount > 0) {
-                filterSummary = filterSummary.slice(0, -2);
-            } else {
-                filterSummary += 'None';
-            }
-
-            // Display the filter summary
-            let filterSummaryElement = document.getElementById('filter-summary');
-            if (!filterSummaryElement) {
-                filterSummaryElement = document.createElement('div');
-                filterSummaryElement.id = 'filter-summary';
-                filterSummaryElement.style.margin = '20px auto';
-                filterSummaryElement.style.padding = '10px 20px';
-                filterSummaryElement.style.backgroundColor = '#f8f8f8';
-                filterSummaryElement.style.borderRadius = '8px';
-                filterSummaryElement.style.maxWidth = '1200px';
-                filterSummaryElement.style.fontSize = '14px';
-
-                const filterSection = document.querySelector('.filter-section');
-                filterSection.parentNode.insertBefore(filterSummaryElement, filterSection.nextSibling);
-            }
-            filterSummaryElement.textContent = filterSummary;
-
-            // Filter the cars
-            const carCards = document.querySelectorAll('.car-card');
-            let visibleCount = 0;
-
-            carCards.forEach(card => {
-                const cardTitle = card.querySelector('.car-title').textContent.toLowerCase();
-                const cardSpecs = card.querySelector('.car-specs').textContent.toLowerCase();
-                const cardPrice = parseFloat(card.querySelector('.car-price').textContent.replace(/[^\d]/g, ''));
-
-                let visible = true;
-
-                // Apply filters
-                if (brand && !cardTitle.includes(brand.toLowerCase())) {
-                    visible = false;
-                }
-
-                if (model && !cardTitle.toLowerCase().includes(model.toLowerCase())) {
-                    visible = false;
-                }
-
-                if (location && !cardSpecs.includes(location.toLowerCase())) {
-                    visible = false;
-                }
-
-                // Customs clearance would be a detail in the specs in a real application
-
-                if (fuelType && !cardSpecs.includes(fuelType.toLowerCase())) {
-                    visible = false;
-                }
-
-                if (year && !cardSpecs.includes(year)) {
-                    visible = false;
-                }
-
-                if (minPrice && cardPrice < parseInt(minPrice)) {
-                    visible = false;
-                }
-
-                if (maxPrice && cardPrice > parseInt(maxPrice)) {
-                    visible = false;
-                }
-
-                // Show/hide the card
-                card.style.display = visible ? 'block' : 'none';
-
-                if (visible) {
-                    visibleCount++;
-                }
-            });
-
-            // Update results count
-            let resultsCount = document.getElementById('results-count');
-            if (!resultsCount) {
-                resultsCount = document.createElement('div');
-                resultsCount.id = 'results-count';
-                resultsCount.style.margin = '20px auto 0';
-                resultsCount.style.padding = '0 20px';
-                resultsCount.style.maxWidth = '1200px';
-                resultsCount.style.fontWeight = 'bold';
-
-                const carsSection = document.querySelector('.cars-section');
-                carsSection.insertBefore(resultsCount, carsSection.firstChild);
-            }
-            resultsCount.textContent = `Found ${visibleCount} cars matching your criteria`;
-
-            // Scroll to results
-            document.getElementById('results-count').scrollIntoView({ behavior: 'smooth' });
-        });
-
-        // Add a clear filters button
-        const filterContainer = document.querySelector('.filter-container');
-        const clearButton = document.createElement('button');
-        clearButton.textContent = 'Clear Filters';
-        clearButton.className = 'clear-button';
-        clearButton.style.backgroundColor = '#f0f0f0';
-        clearButton.style.color = '#333';
-        clearButton.style.border = '1px solid #ddd';
-        clearButton.style.padding = '10px 20px';
-        clearButton.style.borderRadius = '4px';
-        clearButton.style.fontWeight = 'bold';
-        clearButton.style.cursor = 'pointer';
-        clearButton.style.marginTop = '10px';
-        clearButton.style.marginLeft = '10px';
-
-        clearButton.addEventListener('click', function () {
-            // Reset all select elements
-            document.querySelectorAll('.filter-item select').forEach(select => {
-                select.value = '';
-            });
-
-            // Reset all input elements
-            document.querySelectorAll('.filter-item input').forEach(input => {
-                input.value = '';
-            });
-
-            // Show all cars
-            document.querySelectorAll('.car-card').forEach(card => {
-                card.style.display = 'block';
-            });
-
-            // Clear filter summary if it exists
-            const filterSummary = document.getElementById('filter-summary');
-            if (filterSummary) {
-                filterSummary.textContent = 'Filters applied: None';
-            }
-
-            // Update results count
-            const resultsCount = document.getElementById('results-count');
-            if (resultsCount) {
-                resultsCount.textContent = `Found ${document.querySelectorAll('.car-card').length} cars`;
-            }
-        });
-
-        // Add the clear button next to the search button
-        document.querySelector('.filter-item:last-child').appendChild(clearButton);
-        // Toggle menu visibility
-        document.getElementById('manu').addEventListener('click', function () {
-            const menuContainer = document.getElementById('menu-container');
-            menuContainer.classList.toggle('visible');
-        });
-
-        // Close menu when clicking outside
-        document.addEventListener('click', function (event) {
-            const menuContainer = document.getElementById('menu-container');
-            const menuButton = document.getElementById('manu');
-
-            if (!menuContainer.contains(event.target) && event.target !== menuButton) {
-                menuContainer.classList.remove('visible');
-            }
-        });
-
-        // Filter functionality
-        document.querySelector('.search-button').addEventListener('click', function () {
-            // Get filter values
-            const brand = document.getElementById('car-brand').value;
-            const model = document.getElementById('car-model').value;
-            const location = document.getElementById('location').value;
-            const customs = document.getElementById('customs-clearance').value;
-            const fuelType = document.getElementById('fuel-type').value;
-            const year = document.getElementById('year').value;
-            const minPrice = document.getElementById('price-min').value;
-            const maxPrice = document.getElementById('price-max').value;
-
-            // In a real application, you would send these values to a server
-            // For now, we'll just log them to the console
-            console.log({
-                brand,
-                model,
-                location,
-                customs,
-                fuelType,
-                year,
-                minPrice,
-                maxPrice
-            });
-
-            // You could also show a loading indicator here
-            alert('Searching for cars matching your criteria...');
-        });
-
-        // Dynamic car model options based on selected brand
-        document.getElementById('car-brand').addEventListener('change', function () {
-            const brand = this.value;
-            const modelSelect = document.getElementById('car-model');
-
-            // Clear existing options
-            modelSelect.innerHTML = '<option value="">All Models</option>';
-
-            // Add relevant options based on brand
-            if (brand === 'audi') {
-                const models = ['A3', 'A4', 'A6', 'Q5', 'Q7'];
-                models.forEach(model => {
-                    const option = document.createElement('option');
-                    option.value = model.toLowerCase();
-                    option.textContent = model;
-                    modelSelect.appendChild(option);
-                });
-            } else if (brand === 'bmw') {
-                const models = ['1 Series', '3 Series', '5 Series', 'X3', 'X5'];
-                models.forEach(model => {
-                    const option = document.createElement('option');
-                    option.value = model.toLowerCase().replace(' ', '-');
-                    option.textContent = model;
-                    modelSelect.appendChild(option);
-                });
-            } else if (brand === 'mercedes') {
-                const models = ['A-Class', 'C-Class', 'E-Class', 'GLC', 'GLE'];
-                models.forEach(model => {
-                    const option = document.createElement('option');
-                    option.value = model.toLowerCase().replace('-', '');
-                    option.textContent = model;
-                    modelSelect.appendChild(option);
-                });
-            } else if (brand === 'volkswagen') {
-                const models = ['Golf', 'Passat', 'Tiguan', 'Polo', 'Arteon'];
-                models.forEach(model => {
-                    const option = document.createElement('option');
-                    option.value = model.toLowerCase();
-                    option.textContent = model;
-                    modelSelect.appendChild(option);
-                });
-            } else if (brand === 'toyota') {
-                const models = ['Corolla', 'RAV4', 'Camry', 'Yaris', 'C-HR'];
-                models.forEach(model => {
-                    const option = document.createElement('option');
-                    option.value = model.toLowerCase();
-                    option.textContent = model;
-                    modelSelect.appendChild(option);
-                });
-            } else if (brand === 'volvo') {
-                const models = ['XC40', 'XC60', 'XC90', 'S60', 'V60'];
-                models.forEach(model => {
-                    const option = document.createElement('option');
-                    option.value = model.toLowerCase();
-                    option.textContent = model;
-                    modelSelect.appendChild(option);
-                });
-            }
-        });
-
-    </script>
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement(
-                { pageLanguage: 'en,ka,uk,ru,pl' },
-                'google_translate_element'
-            );
-        } 
-    </script>
-    <script type="text/javascript"
-        src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-
-</body>
+        </html>
