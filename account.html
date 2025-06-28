@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Account</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: '#1E3A8A',
+                        secondary: '#F5F5F5'
+                    },
+                    borderRadius: {
+                        'none': '0px',
+                        'sm': '4px',
+                        DEFAULT: '8px',
+                        'md': '12px',
+                        'lg': '16px',
+                        'xl': '20px',
+                        '2xl': '24px',
+                        '3xl': '32px',
+                        'full': '9999px',
+                        'button': '8px'
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        #google_translate_element {
+            margin-bottom: 1px;
+            margin-left: 380px;
+            max-width: 200px;
+        }
+
+        .goog-te-combo {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            font-size: 14px;
+            color: #333;
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        .goog-logo-link {
+            display: none !important;
+        }
+
+        .goog-te-gadget {
+            color: transparent !important;
+            font-size: 0px !important;
+        }
+
+        .goog-te-gadget span {
+            display: none !important;
+        }
+
+        .skiptranslate.goog-te-banner-frame {
+            display: none !important;
+        }
+
+        body {
+            top: 0px !important;
+        }
+
+        .goog-te-menu-value {
+            color: #333 !important;
+            text-decoration: none !important;
+        }
+
+        .translate-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+
+        header img {
+            margin-left: -20px;
+        }
+
+        .text-primary {
+            color: #1E3A8A !important; /* Dark Blue */
+        }
+        .bg-primary {
+            background-color: #1E3A8A !important; /* Dark Blue */
+        }
+        .hover\:bg-red-600:hover {
+            background-color: #1E3A8A !important; /* Dark Blue */
+        }
+        .border-red-300 {
+            border-color: #1E3A8A !important; /* Dark Blue Border */
+        }
+
+        header {
+            background-color: #1E3A8A !important; /* Dark Blue */
+        }
+
+        header a {
+            color: white !important; /* White text for navbar links */
+        }
+
+        header a:hover {
+            color: #F3F4F6 !important; /* Light Grey on hover */
+        }
+
+        h1.text-xl {
+            color: white !important; /* White text for "Account Details" */
+        }
+    </style>
+</head>
+<body class="bg-gradient-to-r from-blue-50 via-blue-100 to-blue-200 min-h-screen">
+    <header class="bg-white shadow-md fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 relative">
+            <div class="flex items-center justify-between h-16">
+                <h1 class="text-xl font-bold text-gray-800">Account Details</h1>
+                <div class="absolute inset-x-0 flex justify-center items-center space-x-4">
+                    <a href="index.html" class="text-gray-800 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition">Home</a>
+                    <a href="upload.html" class="text-gray-800 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition">Sell Car</a>
+                    <a href="Contact.html" class="text-gray-800 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition">Contact Us</a>
+                    <a href="aboutUs.html" class="text-gray-800 hover:text-primary px-3 py-2 rounded-md text-sm font-medium transition">About Us</a>
+                </div>
+                <div id="google_translate_element" class="absolute right-4 mt-1"></div>
+            </div>
+        </div>
+    </header>
+    <main class="pt-24 max-w-4xl mx-auto px-4">
+        <div id="user-details" class="bg-white shadow-lg rounded-lg p-6">
+            <h2 class="text-2xl font-bold text-primary mb-4 border-b-2 border-primary pb-2">Account Details</h2>
+            <p id="user-name" class="text-gray-800 mb-2 font-medium"></p>
+            <p id="user-email" class="text-gray-800 mb-2 font-medium"></p>
+            <p id="user-phone" class="text-gray-800 mb-2 font-medium"></p>
+            <h3 class="text-xl font-semibold text-primary mt-6 mb-4 border-b-2 border-primary pb-2">Your Cars</h3>
+            <ul id="user-cars" class="list-disc pl-6 text-gray-800 space-y-1"></ul>
+            <button id="logout-button" class="mt-6 bg-primary text-white px-4 py-2 rounded-button hover:bg-primary transition">Logout</button>
+        </div>
+    </main>
+    <footer class="bg-primary shadow-md mt-8 py-4">
+        <div class="max-w-7xl mx-auto px-4 text-center text-white text-sm">
+            &copy; 2023 AutoSolo.PL. All rights reserved.
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const email = urlParams.get('email');
+            const user = JSON.parse(localStorage.getItem(email));
+
+            if (user) {
+                document.getElementById('user-name').textContent = `Name: ${user.name}`;
+                document.getElementById('user-email').textContent = `Email: ${user.email}`;
+                document.getElementById('user-phone').textContent = `Phone: ${user.phone || 'Not provided'}`;
+                const carsList = document.getElementById('user-cars');
+                if (user.cars && user.cars.length > 0) {
+                    user.cars.forEach(car => {
+                        const li = document.createElement('li');
+                        li.textContent = car;
+                        carsList.appendChild(li);
+                    });
+                } else {
+                    carsList.textContent = 'No cars listed.';
+                }
+            } else {
+                document.getElementById('user-details').innerHTML = '<p class="text-red-500 font-semibold">User not found.</p>';
+            }
+
+            // Logout functionality
+            const logoutButton = document.getElementById('logout-button');
+            logoutButton.addEventListener('click', function () {
+                localStorage.removeItem('currentUser');
+                window.location.href = 'index.html';
+            });
+        });
+
+        // Google Translate initialization
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                { pageLanguage: 'en' },
+                'google_translate_element'
+            );
+        }
+    </script>
+    <script type="text/javascript" src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+</html>

@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Details | AutoSolo</title>
+    <script src="https://cdn.tailwindcss.com/3.4.16"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/remixicon/4.6.0/remixicon.min.css" rel="stylesheet">
+    <style>
+        .car-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 10px;
+        }
+
+        .thumbnail {
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .thumbnail:hover {
+            transform: scale(1.05);
+        }
+
+        .feature-list {
+            columns: 2;
+            column-gap: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .feature-list {
+                columns: 1;
+            }
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+    <header class="bg-white shadow-sm fixed w-full top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="flex items-center justify-between h-16">
+                <div class="flex items-center">
+                    <img id="img" src="logo.png" alt="AutoSolo" class="h-10">
+                </div>
+                <nav class="hidden md:flex space-x-8">
+                    <a href="index.html"
+                        class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Buy Cars</a>
+                    <a href="upload.html"
+                        class="text-gray-700 hover:text-primary px-3 py-2 rounded-md text-sm font-medium">Sell Cars</a>
+                </nav>
+                <a href="upload.html"
+                    class="bg-primary text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-colors whitespace-nowrap">
+                    Post an Ad
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="pt-20 pb-10">
+        <div class="max-w-7xl mx-auto px-4">
+            <div id="car-details-container" class="bg-white rounded-xl shadow-md overflow-hidden">
+                <!-- Car details will be loaded here by JavaScript -->
+                <div class="text-center py-20">
+                    <i class="ri-loader-4-line animate-spin text-4xl text-primary"></i>
+                    <p class="mt-4 text-gray-600">Loading car details...</p>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const urlParams = new URLSearchParams(window.location.search);
+            const carId = urlParams.get('id');
+
+            if (!carId) {
+                showError("No car specified");
+                return;
+            }
+
+            loadCarDetails(carId);
+        });
+
+        function loadCarDetails(carId) {
+            const container = document.getElementById('car-details-container');
+            container.innerHTML = `<div class="text-center py-20">
+                <i class="ri-loader-4-line animate-spin text-4xl text-primary"></i>
+                <p class="mt-4 text-gray-600">Loading car details...</p>
+            </div>`;
+            // Fetch from backend
+            fetch(`http://localhost:5001/api/cars/${carId}`)
+                .then(res => {
+                    if (!res.ok) throw new Error('Car not found');
+                    return res.json();
+                })
+                .then(car => {
+                    container.innerHTML = createCarDetailsHTML(car);
+                    initImageGallery(car.photos || []);
+                })
+                .catch(err => {
+                    console.error('Error fetching car details:', err);
+                    showError(err.message);
+                });
+        }
+
+        function createCarDetailsHTML(car) {
+            return `
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6">
+                    <!-- Image Gallery -->
+                    <div>
+                        <div class="mb-4 rounded-xl overflow-hidden">
+                            <img id="main-image" src="${car.photos && car.photos[0] ? car.photos[0] : 'placeholder.jpg'}" 
+                                 alt="${car.manufacturer} ${car.model}" class="w-full h-96 object-cover">
+                        </div>
+                        <div class="car-gallery">
+                            ${(car.photos || []).map((photo, index) => `
+                                <img src="${photo}" alt="Photo ${index + 1}" 
+                                     class="thumbnail w-full h-24 object-cover rounded-lg"
+                                     onclick="changeMainImage('${photo}')">
+                            `).join('')}
+                        </div>
+                    </div>
+                    
+                    <!-- Details -->
+                    <div>
+                        <h1 class="text-3xl font-bold mb-2">${car.manufacturer || 'Car'} ${car.model || ''}</h1>
+                        <p class="text-2xl text-primary font-bold mb-6">${formatPrice(car.price, car.currency)}</p>
+                        
+                        <div class="bg-gray-50 p-6 rounded-xl mb-6">
+                            <h2 class="text-xl font-semibold mb-4">Overview</h2>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div>
+                                    <p class="text-gray-600">Brand</p>
+                                    <p class="font-medium">${car.manufacturer || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Model</p>
+                                    <p class="font-medium">${car.model || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Year</p>
+                                    <p class="font-medium">${car.year || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Mileage</p>
+                                    <p class="font-medium">${formatMileage(car.mileage, car.mileageUnit)}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Fuel Type</p>
+                                    <p class="font-medium">${car.fuelType || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Transmission</p>
+                                    <p class="font-medium">${car.transmission || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Color</p>
+                                    <p class="font-medium">${car.color || 'N/A'}</p>
+                                </div>
+                                <div>
+                                    <p class="text-gray-600">Location</p>
+                                    <p class="font-medium">${car.location || 'N/A'}</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Features -->
+                        <div class="mb-6">
+                            <h2 class="text-xl font-semibold mb-4">Features</h2>
+                            <div class="feature-list">
+                                ${car.features && car.features.length > 0 ?
+                    car.features.map(f => `<div class="flex items-center mb-2">
+                                        <i class="ri-checkbox-circle-fill text-primary mr-2"></i>
+                                        <span>${f.replace(/_/g, ' ')}</span>
+                                    </div>`).join('') :
+                    '<p class="text-gray-500">No features listed</p>'}
+                            </div>
+                        </div>
+                        
+                        <!-- Description -->
+                        <div class="mb-6">
+                            <h2 class="text-xl font-semibold mb-4">Description</h2>
+                            <p class="text-gray-700">${car.description || 'No description provided'}</p>
+                        </div>
+                        
+                        <!-- Contact Seller -->
+                        <div class="bg-gray-50 p-6 rounded-xl">
+                            <h2 class="text-xl font-semibold mb-4">Contact Seller</h2>
+                            <div class="space-y-3">
+                                <div class="flex items-center">
+                                    <i class="ri-user-line text-gray-500 mr-3"></i>
+                                    <span>${car.contact?.name || 'Not specified'}</span>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="ri-phone-line text-gray-500 mr-3"></i>
+                                    <a href="tel:${car.contact?.phone || ''}" class="hover:text-primary">
+                                        ${car.contact?.phone || 'Not specified'}
+                                    </a>
+                                </div>
+                                <div class="flex items-center">
+                                    <i class="ri-mail-line text-gray-500 mr-3"></i>
+                                    <a href="mailto:${car.contact?.email || ''}" class="hover:text-primary">
+                                        ${car.contact?.email || 'Not specified'}
+                                    </a>
+                                </div>
+                            </div>
+                            <button onclick="contactSeller()" 
+                                    class="mt-4 w-full bg-primary text-white py-3 rounded-lg hover:bg-red-600 transition-colors">
+                                <i class="ri-chat-3-line mr-2"></i> Contact Seller
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        function initImageGallery(photos) {
+            if (photos.length > 0) {
+                changeMainImage(photos[0]);
+            }
+        }
+
+        function changeMainImage(src) {
+            const mainImg = document.getElementById('main-image');
+            if (mainImg) mainImg.src = src;
+        }
+
+        function contactSeller() {
+            alert("Contact form would open here in a real implementation");
+        }
+
+        function showError(message) {
+            const container = document.getElementById('car-details-container');
+            container.innerHTML = `
+                <div class="text-center py-20">
+                    <i class="ri-error-warning-line text-4xl text-red-500"></i>
+                    <p class="mt-4 text-gray-600">${message}</p>
+                    <a href="index.html" class="mt-6 inline-block bg-primary text-white px-6 py-2 rounded-lg hover:bg-red-600 transition-colors">
+                        Back to Marketplace
+                    </a>
+                </div>
+            `;
+        }
+
+        // Helper functions
+        function formatPrice(price, currency) {
+            if (!price) return 'Price not set';
+            return new Intl.NumberFormat(undefined, {
+                style: 'currency',
+                currency: currency || 'USD'
+            }).format(price);
+        }
+
+        function formatMileage(mileage, unit) {
+            if (!mileage) return 'Mileage not set';
+            return `${mileage.toLocaleString()} ${unit === 'miles' ? 'mi' : 'km'}`;
+        }
+    </script>
+</body>
+
+</html>
