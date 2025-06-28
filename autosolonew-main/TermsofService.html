@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Service - TNET LLC</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background-color: #f4f7fb; /* Light Grey Background */
+            color: #333; /* Dark Text */
+            line-height: 1.6;
+        }
+
+        .header {
+            background-color: #1E3A8A; /* Blue Background */
+            color: white; /* White Text */
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-bottom: 4px solid #1E3A8A; /* Blue Border */
+        }
+
+        .header h1 {
+            font-size: 3rem;
+            letter-spacing: 2px;
+            margin-bottom: 1rem;
+        }
+
+        .header p {
+            font-size: 1.25rem;
+            font-weight: 300;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 1rem;
+        }
+
+        .terms-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        @media (max-width: 768px) {
+            .terms-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .terms-content {
+            background-color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .terms-content:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 2rem;
+            color: #1E3A8A; /* Blue Text */
+            margin-bottom: 1rem;
+            border-bottom: 2px solid #1E3A8A; /* Blue Border */
+            padding-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .section-content {
+            font-size: 1.125rem;
+            color: #555;
+            margin-bottom: 1.5rem;
+            text-align: justify;
+        }
+
+        /* Stylish Buttons */
+        .btn {
+            background-color: #1E3A8A; /* Blue Background */
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-radius: 50px; /* Fully rounded corners */
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+            display: inline-block;
+            text-align: center;
+            text-transform: uppercase; /* Uppercase text for a clean look */
+            letter-spacing: 1px; /* Slight space between letters */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+        }
+
+        .btn:hover {
+            background-color: #162E6B; /* Slightly darker blue on hover */
+            transform: scale(1.05); /* Slight grow on hover */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
+        }
+
+        .btn:active {
+            transform: scale(0.98); /* Slight shrink on click */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Lighter shadow when clicked */
+        }
+
+        .footer {
+            background-color: #1E3A8A; /* Blue Background */
+            color: white; /* White Text */
+            text-align: center;
+            padding: 1.5rem;
+            margin-top: 4rem;
+        }
+
+        .footer p {
+            font-size: 1rem;
+            font-weight: 300;
+        }
+
+        .buttons {
+            margin-top: 2rem; /* Added margin-top to move buttons lower */
+            display: flex;
+            justify-content: center;
+        }
+
+        .buttons a {
+            color: #1E3A8A; /* Blue text */
+            text-decoration: none;
+            padding: 0.8rem 2rem; /* Button-like padding */
+            font-size: 1rem; /* Standardized font size */
+            margin: 0 1rem; /* Adjusted margin */
+            background-color: white; /* White background */
+            border-radius: 30px; /* Fully rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Subtle shadow */
+            transition: background-color 0.3s ease, color 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transitions */
+            text-transform: uppercase; /* Uppercase text */
+            letter-spacing: 1px; /* Slight space between letters */
+        }
+
+        .buttons a:hover {
+            background-color: #1E3A8A; /* Blue background on hover */
+            color: white; /* White text on hover */
+            transform: scale(1.05); /* Slight grow on hover */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3); /* Deeper shadow on hover */
+        }
+
+        .buttons a:active {
+            transform: scale(0.98); /* Slight shrink on click */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2); /* Lighter shadow when clicked */
+        }
+
+        /* Stylish Agree Button */
+        
+
+        /* Position the translate widget in the top-left corner */
+        #google_translate_element {
+            margin-bottom: 20x;
+            margin-left: 40px;
+            max-width: 200px;
+        }
+
+        /* Style the Google dropdown */
+        .goog-te-combo {
+            padding: 8px 12px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            width: 100%;
+            font-size: 14px;
+            color: #333;
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        /* Style the Google logo/branding */
+        .goog-logo-link {
+            display: none !important;
+        }
+
+        .goog-te-gadget {
+            color: transparent !important;
+            font-size: 0px !important;
+        }
+
+        .goog-te-gadget span {
+            display: none !important;
+        }
+
+        /* Banner styling */
+        .skiptranslate.goog-te-banner-frame {
+            display: none !important;
+        }
+
+        body {
+            top: 0px !important;
+        }
+
+        /* Styling for dropdown items */
+        .goog-te-menu-value {
+            color: #333 !important;
+            text-decoration: none !important;
+        }
+
+        /* Custom label */
+        .translate-label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+            font-size: 14px;
+        }
+    </style>
+</head>
+
+<body>
+    <header class="header">
+        <div class="translate-container">
+            <label for="google_translate_element" class="translate-label"></label>
+            <div id="google_translate_element"></div>
+        </div>
+        <h1>Terms of Service</h1>
+        <p>These are the Terms that govern your use of our services.</p>
+        <div class="buttons">
+            <a href="index.html">Home</a>
+            <a href="upload.html">Sell Car</a>
+            <a href="Contact.html">Contact Us</a>
+            <a href="aboutUs.html">About Us</a>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="terms-grid">
+            <div class="terms-content">
+                <h2 class="section-title">Introduction</h2>
+                <p class="section-content">Welcome to TNET LLC! These Terms of Service (“Terms”) govern your access to and use of our website and services. By using our website, you agree to comply with these terms. Please read them carefully.</p>
+
+                <h2 class="section-title">Acceptance of Terms</h2>
+                <p class="section-content">By accessing or using our website, you agree to abide by these Terms. If you do not agree, you must not use our services. We may modify these Terms at any time, and any changes will be communicated via email or notice on our website.</p>
+
+                <h2 class="section-title">Changes to Terms</h2>
+                <p class="section-content">We reserve the right to change these Terms at any time. Any changes will be effective immediately upon posting on the website. You are encouraged to review the Terms periodically to stay informed of any updates.</p>
+
+                <h2 class="section-title">Use of Our Services</h2>
+                <p class="section-content">You agree to use our services in accordance with all applicable laws, regulations, and policies. You are solely responsible for any content you upload, post, or share on our platform.</p>
+
+                <h2 class="section-title">Account Responsibilities</h2>
+                <p class="section-content">If you create an account on our website, you are responsible for maintaining the confidentiality of your account credentials. You are also responsible for all activities that occur under your account.</p>
+
+                <h2 class="section-title">Privacy and Security</h2>
+                <p class="section-content">Your privacy and the security of your personal data are important to us. By using our services, you consent to the collection and use of your data as outlined in our Privacy Policy.</p>
+
+                <h2 class="section-title">Termination of Service</h2>
+                <p class="section-content">We may suspend or terminate your access to our services at our discretion if we believe that you have violated these Terms or engaged in any harmful activity.</p>
+
+                <h2 class="section-title">Limitation of Liability</h2>
+                <p class="section-content">We are not responsible for any indirect, incidental, or consequential damages arising from your use of our services. Our liability is limited to the maximum extent permitted by law.</p>
+
+                <h2 class="section-title">Governing Law</h2>
+                <p class="section-content">These Terms will be governed by the laws of the jurisdiction where TNET LLC operates. Any disputes will be resolved through binding arbitration.</p>
+
+                <!-- Stylish Agree Button -->
+               
+            </div>
+
+            <div class="terms-content">
+                <h2 class="section-title">Contact Information</h2>
+                <p class="section-content">If you have any questions or concerns regarding these Terms of Service, feel free to contact us:</p>
+
+                <div class="info-item">
+                    <h3>Customer Support</h3>
+                    <p><i>📞</i> Phone: +48 886 581 602</p>
+                    <p><i>✉️</i> Email: autosolo000@gmail.com</p>
+                    <!-- <p><i>🕒</i> Hours: Monday - Friday, 9am - 6pm</p> -->
+                </div>
+
+                <div class="info-item">
+                    <h3>Main Office</h3>
+                    <p><i>📍</i> Country: Poland, City: ZUKOWO, Street: UL.JABLONIOWA 7A/3, ZIP Code: 83-330</p>
+                    <p><i>📞</i> Phone: +48 886 581 602</p>
+                    <p><i>✉️</i> Email: autosolo000@gmail.com</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2025 Autosolo | All Rights Reserved</p>
+    </footer>
+
+    <script>
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement(
+                { pageLanguage: 'en' },
+                'google_translate_element'
+            );
+        }
+    </script>
+    <script type="text/javascript"
+        src="https://translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+</body>
+
+</html>
