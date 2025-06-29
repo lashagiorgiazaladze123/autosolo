@@ -1,9 +1,6 @@
 services:
   - type: web
-    name: autosolonew-backend
-    env: node
-    region: oregon
-    plan: free
-    rootDir: backend
-    buildCommand: npm install
-    startCommand: npm start
+    name: autoSolo
+    env: python
+    buildCommand: poetry install
+    startCommand: poetry run gunicorn app:app --bind 0.0.0.0:$PORT
