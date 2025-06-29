@@ -2,5 +2,7 @@ services:
   - type: web
     name: autoSolo
     env: python
+    build:
+      pythonVersion: 3.11  # Make sure this matches what your app supports
     buildCommand: poetry install
     startCommand: poetry run gunicorn app:app --bind 0.0.0.0:$PORT
